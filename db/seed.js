@@ -20,6 +20,19 @@ async function dropTables() {
 
 async function createTables() {
   // Define your tables and fields
+  try {
+    console.log("Starting to build tables...");
+    await client.query(`
+      CREATE TABLE users (
+        id SERIAL PRIMARY KEY,
+        username varchar(255) UNIQUE NOT NULL,
+        password varchar(255) NOT NULL
+        )
+  `);
+  } catch (error) {
+    console.error("Error building tables!");
+    throw error;
+  }
 }
 
 async function populateTables() {
