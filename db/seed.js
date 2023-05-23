@@ -1,5 +1,6 @@
 const { client } = require("./client");
 const { createUser } = require("./adapters/users");
+const { createActivity } = require("./adapters/activities");
 const {
   users,
   activities,
@@ -28,6 +29,8 @@ async function createTables() {
   // Define your tables and fields
   try {
     console.log("Starting to create tables...");
+
+    //users
     await client.query(`
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -35,6 +38,8 @@ async function createTables() {
         password varchar(255) NOT NULL
         );`);
     console.log("users table created");
+
+    //routines
     await client.query(`CREATE TABLE routines (
         id SERIAL PRIMARY KEY,
         creator_id INTEGER REFERENCES users(id),
@@ -43,12 +48,16 @@ async function createTables() {
         goal TEXT NOT NUll
       );`);
     console.log("Routines tables created");
+
+    //activities
     await client.query(`CREATE TABLE activities (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) UNIQUE NOT NULL,
         description TEXT NOT NULL
       );`);
     console.log("Activities table created");
+
+    //routine_activities
     await client.query(`CREATE TABLE routine_activities (
         id SERIAL PRIMARY KEY,
         routine_id INTEGER REFERENCES routines(id),
@@ -71,6 +80,12 @@ async function populateTables() {
       await createUser(user);
     }
     console.log("users table populated");
+
+    console.log("populating activities table"); /////////
+    for (const activity of activities) {
+      await createActivity(activity);
+    }
+    console.log("activities table populated");
   } catch (error) {
     console.error(error);
   }
