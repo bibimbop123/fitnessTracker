@@ -6,11 +6,11 @@ const users = [
   { username: "Chris", password: 12345678 },
 ];
 const activities = [
-  { id: "1", name: "squats", description: "LEGS" },
-  { id: "2", name: "lunges", description: "LEGS" },
-  { id: "3", name: "deadlifts", description: "LEGS" },
-  { id: "4", name: "calf raises", description: "LEGS" },
-  { id: "5", name: "hip thrusts/bridges", description: "LEGS" },
+  { name: "squats", description: "LEGS" },
+  { name: "lunges", description: "LEGS" },
+  { name: "deadlifts", description: "LEGS" },
+  { name: "calf raises", description: "LEGS" },
+  { name: "hip thrusts/bridges", description: "LEGS" },
 ];
 const routines = [
   {
