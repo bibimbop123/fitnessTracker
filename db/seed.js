@@ -1,4 +1,5 @@
 const { client } = require("./client");
+const { createUser } = require("./adapters/users");
 const {
   users,
   activities,
@@ -11,10 +12,10 @@ async function dropTables() {
   try {
     console.log("starting to drop tables");
     await client.query(`
-      DROP TABLE IF EXISTS routineActivites,
-      DROP TABLE IF EXISTS activites,
-      DROP TABLE IF EXISTS routines,
-      DROP TABLE IF EXISTS users
+      DROP TABLE IF EXISTS routine_activities;
+      DROP TABLE IF EXISTS activities;
+      DROP TABLE IF EXISTS routines;
+      DROP TABLE IF EXISTS users;
       `);
     console.log("finished dropping tables");
   } catch (error) {
@@ -32,50 +33,46 @@ async function createTables() {
         id SERIAL PRIMARY KEY,
         username varchar(255) UNIQUE NOT NULL,
         password varchar(255) NOT NULL
-        );
-      CREATE TABLE routines (
+        );`);
+    console.log("users table created");
+    await client.query(`CREATE TABLE routines (
         id SERIAL PRIMARY KEY,
         creator_id INTEGER REFERENCES users(id),
         is_public BOOLEAN DEFAULT false,
         name VARCHAR(255)UNIQUE NOT NULL,
         goal TEXT NOT NUll
-      );
-      CREATE TABLE activities (
+      );`);
+    console.log("Routines tables created");
+    await client.query(`CREATE TABLE activities (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) UNIQUE NOT NULL,
         description TEXT NOT NULL
-      );
-      CREATE TABLE routineActivities (
+      );`);
+    console.log("Activities table created");
+    await client.query(`CREATE TABLE routine_activities (
         id SERIAL PRIMARY KEY,
-        routine_id INTEGER UNIQUE REFERENCES routines(id),
-        activity_id INTEGER UNIQUE REFERENCES activities (id),
+        routine_id INTEGER REFERENCES routines(id),
+        activity_id INTEGER REFERENCES activities (id),
         duration INTEGER,
-        count INTEGER
-      );
-  `);
+        count INTEGER,
+        UNIQUE (routine_id, activity_id)
+      );`);
+    console.log("routine_activities table created");
   } catch (error) {
     console.error("Error creating tables!");
     throw error;
   }
 }
 
-async function populateTables(username, password) {
+async function populateTables() {
   console.log("populating initial tables");
   try {
-    const {
-      rows: [users],
-    } = await client.query(
-      `
-      INSERT INTO users(username, password))
-      VALUES($1,$2)
-      ON CONFLICT (username) DO NOTHING
-      RETURNING *;
-      `,
-      [username, password]
-    );
-    return { rows };
+    for (const user of users) {
+      await createUser(user);
+    }
+    console.log("users table populated");
   } catch (error) {
-    throw error;
+    console.error(error);
   }
 }
 

@@ -1,19 +1,21 @@
-async function createUsers(username, password) {
-  console.log("populating initial tables");
+const { client } = require("../client");
+async function createUser({ username, password }) {
   try {
     const {
-      rows: [users],
+      rows: [user],
     } = await client.query(
       `
-        INSERT INTO users(username, password))
+        INSERT INTO users(username, password)
         VALUES($1,$2)
         ON CONFLICT (username) DO NOTHING
         RETURNING *;
         `,
       [username, password]
     );
-    return { rows };
+    return user;
   } catch (error) {
     throw error;
   }
 }
+
+module.exports = { createUser };
