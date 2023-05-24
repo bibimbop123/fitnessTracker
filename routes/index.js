@@ -11,8 +11,8 @@ module.exports = router;
 
 const usersRouter = require("./users");
 router.use("/users", usersRouter);
-// const activitiesRouter = require("./activites");
-// router.use("/activites", activitiesRouter);
+const activitiesRouter = require("./activities");
+router.use("/activities", activitiesRouter);
 const routinesRouter = require("./routines");
 router.use("/routines", routinesRouter);
 // const routineActivitiesRouter = require("./routine_activities");

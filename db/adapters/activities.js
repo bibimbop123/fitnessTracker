@@ -18,4 +18,10 @@ async function createActivity({ name, description }) {
   }
 }
 
-module.exports = { createActivity };
+async function getAllActivities() {
+  const { rows } = await client.query(`
+    SELECT * FROM activities;
+  `);
+  return rows;
+}
+module.exports = { createActivity, getAllActivities };
