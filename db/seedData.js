@@ -20,8 +20,8 @@ const activities = [
   { name: "skullcrushers", description: "ARMS" },
   { name: "lat. pull down", description: "BACK" },
   { name: "rows", description: "BACK" },
-  { name: "deadlifts", description: "CHEST" },
-  { name: "calf raises", description: "CHEST" },
+  { name: "chest press", description: "CHEST" },
+  { name: "push ups", description: "CHEST" },
   { name: "sit up", description: "ABS" },
   { name: "walking", description: "CARDIO" },
   { name: "downward dog", description: "STRETCHING" },
@@ -71,6 +71,7 @@ const routines = [
   },
 ];
 const routine_activities = [
+  //arms
   {
     routine_id: 1,
     activity_id: 6,
@@ -85,13 +86,97 @@ const routine_activities = [
   },
   {
     routine_id: 1,
-    activity_id: 6,
+    activity_id: 8,
     duration: 1,
     count: 8,
   },
   {
     routine_id: 1,
-    activity_id: 7,
+    activity_id: 9,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 1,
+    activity_id: 10,
+    duration: 1,
+    count: 8,
+  },
+  //legs
+  {
+    routine_id: 2,
+    activity_id: 1,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 2,
+    activity_id: 2,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 2,
+    activity_id: 3,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 2,
+    activity_id: 4,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 2,
+    activity_id: 5,
+    duration: 1,
+    count: 8,
+  },
+  //back
+  {
+    routine_id: 3,
+    activity_id: 11,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 3,
+    activity_id: 12,
+    duration: 1,
+    count: 8,
+  },
+  //chest
+  {
+    routine_id: 4,
+    activity_id: 13,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 4,
+    activity_id: 14,
+    duration: 1,
+    count: 8,
+  },
+  //abs
+  {
+    routine_id: 5,
+    activity_id: 15,
+    duration: 1,
+    count: 8,
+  },
+  //cardio
+  {
+    routine_id: 6,
+    activity_id: 16,
+    duration: 1,
+    count: 8,
+  },
+  //stretching
+  {
+    routine_id: 7,
+    activity_id: 17,
     duration: 1,
     count: 8,
   },
