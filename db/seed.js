@@ -7,6 +7,7 @@ const {
   routines,
   routine_activities,
 } = require("./seedData");
+const { createRoutine } = require("./adapters/routines");
 
 async function dropTables() {
   // Drop all tables in order
@@ -81,11 +82,15 @@ async function populateTables() {
     }
     console.log("users table populated");
 
-    console.log("populating activities table"); /////////
+    console.log("populating activities table");
     for (const activity of activities) {
       await createActivity(activity);
     }
     console.log("activities table populated");
+    console.log("populating routines tables");
+    for (const routine of routines) {
+      await createRoutine(routine);
+    }
   } catch (error) {
     console.error(error);
   }
