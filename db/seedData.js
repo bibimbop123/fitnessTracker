@@ -73,7 +73,25 @@ const routines = [
 const routine_activities = [
   {
     routine_id: 1,
-    activity_id: 2,
+    activity_id: 6,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 1,
+    activity_id: 7,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 1,
+    activity_id: 6,
+    duration: 1,
+    count: 8,
+  },
+  {
+    routine_id: 1,
+    activity_id: 7,
     duration: 1,
     count: 8,
   },
