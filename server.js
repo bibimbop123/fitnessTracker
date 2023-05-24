@@ -1,12 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
-const PORT = 3000;
+const PORT = 5432;
 
 const app = express();
 
 const client = require("./db/client");
-client.connect();
+
+// client.connect();
 // Middleware
 app.use(morgan("dev"));
 app.use(express.json());
