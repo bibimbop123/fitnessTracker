@@ -1,13 +1,13 @@
 const { client } = require("./client");
 const { createUser } = require("./adapters/users");
 const { createActivity } = require("./adapters/activities");
+const { createRoutine } = require("./adapters/routines");
 const {
   users,
   activities,
   routines,
   routine_activities,
 } = require("./seedData");
-const { createRoutine } = require("./adapters/routines");
 
 async function dropTables() {
   // Drop all tables in order

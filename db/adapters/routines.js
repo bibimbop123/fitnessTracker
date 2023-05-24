@@ -19,7 +19,9 @@ async function createRoutine({ creator_id, is_public, name, goal }) {
 }
 async function getAllRoutines() {
   const { rows } = await client.query(`
-    SELECT * FROM routines;
+    SELECT * FROM routines
+    INNER JOIN activities 
+    ON routines.id = activities.id;
   `);
   return rows;
 }
@@ -40,5 +42,15 @@ async function getRoutineById(id) {
   );
   return routine;
 }
+async function getRoutinesWithoutActivities() {
+  const {
+    rows: [routine],
+  } = await client.query(`SELECT * FROM routines`);
+}
 
-module.exports = { createRoutine, getAllRoutines, getRoutineById };
+module.exports = {
+  createRoutine,
+  getAllRoutines,
+  getRoutineById,
+  getRoutinesWithoutActivities,
+};
