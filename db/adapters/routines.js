@@ -23,4 +23,22 @@ async function getAllRoutines() {
   `);
   return rows;
 }
-module.exports = { createRoutine, getAllRoutines };
+
+async function getRoutineById(id) {
+  const {
+    rows: [routine],
+  } = await client.query(
+    `
+    SELECT routines.name, activities.name 
+    FROM routines 
+    WHERE routine.id = $1 
+    INNER JOIN activities 
+    ON routines.id = activities.id
+    
+  `,
+    [id]
+  );
+  return routine;
+}
+
+module.exports = { createRoutine, getAllRoutines, getRoutineById };
