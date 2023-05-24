@@ -16,10 +16,45 @@ const routines = [
   {
     creator_id: 1,
     is_public: true,
-    name: "lift weights",
+    name: "arms",
     goal: "get swole",
   },
-  {},
+  {
+    creator_id: 2,
+    is_public: true,
+    name: "leg ",
+    goal: "get swole",
+  },
+  {
+    creator_id: 3,
+    is_public: true,
+    name: "back",
+    goal: "get swole",
+  },
+  {
+    creator_id: 4,
+    is_public: true,
+    name: "chest",
+    goal: "get swole",
+  },
+  {
+    creator_id: 5,
+    is_public: true,
+    name: "Abs",
+    goal: "get swole",
+  },
+  {
+    creator_id: 6,
+    is_public: true,
+    name: "hiit cardio",
+    goal: "heart and lung health",
+  },
+  {
+    creator_id: 7,
+    is_public: true,
+    name: "stretching",
+    goal: "touch your toes",
+  },
 ];
 const routine_activities = [];
 
