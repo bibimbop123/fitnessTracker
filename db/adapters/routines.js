@@ -1,18 +1,18 @@
 const { client } = require("../client");
-async function createRoutine({ creatorId, isPublic, name, goal }) {
+async function createRoutine({ creator_id, is_public, name, goal }) {
   try {
     const {
       rows: [routine],
     } = await client.query(
       `
-        INSERT INTO users(creatorId, isPublic, name, goal)
-        VALUES($1,$2,$3,$5)
-        ON CONFLICT (name) DO NOTHING
+        INSERT INTO routines("creator_id", is_public, name, goal)
+        VALUES($1,$2,$3,$4)
+        ON CONFLICT (name) DO NOTHING 
         RETURNING *;
         `,
-      [creatorId, isPublic, name, goal]
+      [creator_id, is_public, name, goal]
     );
-    return user;
+    return routine;
   } catch (error) {
     throw error;
   }
