@@ -7,7 +7,7 @@ const app = express();
 
 const client = require("./db/client");
 
-// client.connect();
+client.connect();
 // Middleware
 app.use(morgan("dev"));
 app.use(express.json());

@@ -1,0 +1,14 @@
+const authRouter = require('express').Router()
+const { createUser } = require("../db/adapters/users)
+
+// POST /api/auth/signup
+authRouter.post("/signup", async (req, res, next)=>{
+    try{
+        const { username, password } = req.body;
+        const user = await createUser( { username, password } )
+    } catch (error){
+        next(error);
+    }
+})
+
+module.exports = authRouter;
