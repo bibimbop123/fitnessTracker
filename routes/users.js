@@ -1,10 +1,16 @@
 const usersRouter = require("express").Router();
 const { getAllUsers } = require("../db/adapters/users");
 
-usersRouter.get("/", (req, res, next) => {
+usersRouter.use((req, res, next) => {
+  console.log("A request is being made to /users");
+
+  next();
+});
+
+usersRouter.get("/", async (req, res, next) => {
   try {
-    const users = getAllUsers();
-    res.send(users);
+    const users = await getAllUsers();
+    res.send({ users });
   } catch (error) {
     next(error);
   }
