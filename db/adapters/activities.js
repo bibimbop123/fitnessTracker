@@ -33,9 +33,9 @@ async function getActivityById(id) {
   return rows;
 }
 
-async function updateActivity(activityId, name, description) {
+async function updateActivity({ activityId, name, description }) {
   // build the set string
-  const setString = Object.keys(fields)
+  const setString = Object.keys({ activityId, name, description })
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
 

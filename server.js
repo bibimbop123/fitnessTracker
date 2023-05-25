@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
+let cookieParser = require("cookieparser");
 const PORT = 3000;
 const jwt = require("jsonwebtoken");
 const app = express();
@@ -12,6 +13,7 @@ client.connect();
 app.use(morgan("dev"));
 app.use(express.json());
 
+app.use(cookieParser(process.env.COOKIE_SECRET));
 // Routes
 app.use("/api", require("./routes"));
 
