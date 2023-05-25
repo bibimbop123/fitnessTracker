@@ -24,4 +24,12 @@ async function getAllActivities() {
   `);
   return rows;
 }
-module.exports = { createActivity, getAllActivities };
+
+async function getActivityById(id) {
+  const { rows } = await client.query(`
+    SELECT * FROM activities
+    WHERE id=${id};
+  `);
+  return rows;
+}
+module.exports = { createActivity, getAllActivities, getActivityById };
