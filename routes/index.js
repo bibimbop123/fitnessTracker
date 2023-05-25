@@ -17,5 +17,5 @@ const routinesRouter = require("./routines");
 router.use("/routines", routinesRouter);
 const routineActivitiesRouter = require("./routine_activities");
 router.use("/routineactivities", routineActivitiesRouter);
-const authRouter = require("./auth.js ");
+const authRouter = require("./auth.js");
 router.use("/auth", authRouter);
