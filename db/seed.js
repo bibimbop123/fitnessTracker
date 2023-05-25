@@ -4,7 +4,11 @@ const {
   getUserById,
   getUserByUsername,
 } = require("./adapters/users");
-const { createActivity, getActivityById } = require("./adapters/activities");
+const {
+  createActivity,
+  getActivityById,
+  updateActivity,
+} = require("./adapters/activities");
 const { createRoutine } = require("./adapters/routines");
 const {
   users,
@@ -103,6 +107,9 @@ async function populateTables() {
 
     const activity_ = await getActivityById(7);
     console.log("activity you selected is", activity_);
+
+    const _activity = await updateActivity("squats");
+    console.log("activity updated", _activity);
 
     console.log("populating routines tables");
     for (const routine of routines) {

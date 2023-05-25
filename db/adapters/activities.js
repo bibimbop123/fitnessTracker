@@ -32,4 +32,40 @@ async function getActivityById(id) {
   `);
   return rows;
 }
-module.exports = { createActivity, getAllActivities, getActivityById };
+
+async function updateActivity(name, description, fields = {}) {
+  // build the set string
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+
+  // return early if this is called without fields
+  if (setString.length === 0) {
+    return;
+  }
+
+  try {
+    const {
+      rows: [activity],
+    } = await client.query(
+      `
+        UPDATE activities
+        SET ${setString}
+        WHERE id= ${(name, description)}
+        RETURNING *;
+      `,
+      Object.values(fields)
+    );
+
+    return activity;
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports = {
+  createActivity,
+  getAllActivities,
+  getActivityById,
+  updateActivity,
+};
