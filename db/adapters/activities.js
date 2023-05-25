@@ -33,7 +33,7 @@ async function getActivityById(id) {
   return rows;
 }
 
-async function updateActivity(name, description, fields = {}) {
+async function updateActivity(activityId, name, description) {
   // build the set string
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -51,10 +51,10 @@ async function updateActivity(name, description, fields = {}) {
       `
         UPDATE activities
         SET ${setString}
-        WHERE id= ${(name, description)}
+        WHERE id = ${activityId} 
         RETURNING *;
       `,
-      Object.values(fields)
+      [activityId, name, description]
     );
 
     return activity;
