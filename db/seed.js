@@ -1,5 +1,5 @@
 const { client } = require("./client");
-const { createUser } = require("./adapters/users");
+const { createUser, getUserById } = require("./adapters/users");
 const { createActivity } = require("./adapters/activities");
 const { createRoutine } = require("./adapters/routines");
 const {
@@ -80,7 +80,13 @@ async function populateTables() {
     for (const user of users) {
       await createUser(user);
     }
+
     console.log("users table populated");
+
+    console.log("getting user id");
+
+    const user_ = await getUserById(1);
+    console.log("user id is", user_);
 
     console.log("populating activities table");
     for (const activity of activities) {
