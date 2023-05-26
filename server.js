@@ -1,10 +1,12 @@
+const PORT = 3000;
 require("dotenv").config();
 const express = require("express");
+const app = express();
 const morgan = require("morgan");
 let cookieParser = require("cookie-parser");
-const PORT = 3000;
+
 const jwt = require("jsonwebtoken");
-const app = express();
+
 const cors = require("cors");
 
 const { client } = require("./db/client");
@@ -31,4 +33,7 @@ const { authRequired } = require("./routes/utils");
 app.get("/test", (req, res, next) => {
   res.send("You are authorized!");
 });
-// Sereve App
+// Server App
+app.listen(PORT, () => {
+  console.log("listening on port", PORT);
+});
