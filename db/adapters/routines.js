@@ -47,10 +47,26 @@ async function getRoutinesWithoutActivities() {
     rows: [routine],
   } = await client.query(`SELECT * FROM routines`);
 }
+async function getAllPublicRoutines() {
+  try {
+    const {
+      rows: [publicRoutine],
+    } = await client.query(`
+    SELECT * FROM routines
+    JOIN activities 
+    ON routines.id = activities.id;
+    WHERE is_public = true
+  `);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 module.exports = {
   createRoutine,
   getAllRoutines,
   getRoutineById,
   getRoutinesWithoutActivities,
+  getAllPublicRoutines,
 };

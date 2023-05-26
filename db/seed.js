@@ -9,7 +9,13 @@ const {
   getActivityById,
   updateActivity,
 } = require("./adapters/activities");
-const { createRoutine } = require("./adapters/routines");
+const {
+  createRoutine,
+  getAllRoutines,
+  getRoutineById,
+  getRoutinesWithoutActivities,
+  getAllPublicRoutines,
+} = require("./adapters/routines");
 const {
   users,
   activities,
