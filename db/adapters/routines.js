@@ -27,20 +27,36 @@ async function getAllRoutines() {
 }
 
 async function getRoutineById(id) {
-  const {
-    rows: [routine],
-  } = await client.query(
+  console.log("hello");
+  const { rows } = await client.query(
     `
-    SELECT routines.name, activities.name FROM routines 
-    JOIN activities 
-    ON routines.id = activities.id
-    WHERE routine.id = $1 
-    
-    
+    SELECT 
+      routines.id as id,
+      routines.name as name,
+      routines.goal as goal, 
+        CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
+        ELSE 
+        JSON_AGG(
+          JSON_BUILD_OBJECT(
+          'id', activities.id,
+          'name', activities.name,
+          'description', activities.description,
+          'duration', routine_activities.duration,
+          'count', routine_activities.count
+          )
+        ) END AS activities
+        FROM routines
+        JOIN routine_activities 
+        ON routines.id = routine_activities.routine_id
+        JOIN activities 
+        ON routine_activities.activity_id = activities.id
+        WHERE routines.id = $1
+        GROUP BY routines.id, routine_activities.routine_id
   `,
     [id]
   );
-  return routine;
+  console.log({ rows });
+  return rows;
 }
 async function getRoutinesWithoutActivities() {
   const {
@@ -54,8 +70,8 @@ async function getAllPublicRoutines() {
     } = await client.query(`
     SELECT * FROM routines
     JOIN activities 
-    ON routines.id = activities.id;
-    WHERE is_public = true
+    ON routines.id = activities.id
+    WHERE is_public = true;
   `);
     return rows;
   } catch (error) {
