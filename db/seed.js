@@ -108,7 +108,11 @@ async function populateTables() {
     const activity_ = await getActivityById(7);
     console.log("activity you selected is", activity_);
 
-    const _activity = await updateActivity("squats", "TEST");
+    const _activity = await updateActivity(
+      1,
+      "new activity name",
+      "updated description"
+    );
     console.log("activity updated", _activity);
 
     console.log("populating routines tables");
