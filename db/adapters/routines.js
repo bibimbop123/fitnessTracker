@@ -31,11 +31,11 @@ async function getRoutineById(id) {
     rows: [routine],
   } = await client.query(
     `
-    SELECT routines.name, activities.name 
-    FROM routines 
-    WHERE routine.id = $1 
-    INNER JOIN activities 
+    SELECT routines.name, activities.name FROM routines 
+    JOIN activities 
     ON routines.id = activities.id
+    WHERE routine.id = $1 
+    
     
   `,
     [id]
