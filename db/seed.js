@@ -15,6 +15,8 @@ const {
   getRoutinesWithoutActivities,
   getAllPublicRoutines,
 } = require("./adapters/routines");
+
+const { addActivityToRoutine } = require("./adapters/routine-activities");
 const {
   users,
   activities,
@@ -127,6 +129,10 @@ async function populateTables() {
     console.log("getting routine by id");
     const routine_ = await getRoutineById(2);
     console.log("the routine you selected is", routine_);
+
+    console.log("adding activities to routine");
+    const addActivity = await addActivityToRoutine(1, 2, 10, 10);
+    console.log("added activity to routine", addActivity);
   } catch (error) {
     console.error(error);
   }
