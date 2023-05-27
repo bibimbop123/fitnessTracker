@@ -63,19 +63,88 @@ async function getRoutinesWithoutActivities() {
     rows: [routine],
   } = await client.query(`SELECT * FROM routines`);
 }
-async function getAllPublicRoutines() {
+async function getAllRoutinesByUser(userId) {
   try {
     const {
-      rows: [publicRoutine],
-    } = await client.query(`
-    SELECT * FROM routines
-    JOIN activities 
-    ON routines.id = activities.id
-    WHERE is_public = true;
-  `);
+      rows: [routine],
+    } = await client.query(
+      `
+        SELECT *
+        FROM routines
+        WHERE creator_id = ${userId};
+        `,
+      [userId]
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getAllPublicRoutines() {
+  try {
+    const { rows } = await client.query(`
+    SELECT 
+      routines.id as id,
+      routines.name as name,
+      routines.goal as goal,
+      CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
+      ELSE
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'id', activities.id,
+          'name', activities.name,
+          'description', activities.description,
+          'duration', routine_activities.duration,
+          'count', routine_activities.count
+          
+        )
+      ) END AS activities
+      FROM routines
+      FULL OUTER JOIN routine_activities 
+      ON routines.id = routine_activities.routine_id
+      FULL OUTER JOIN activities
+      ON activities.id = routine_activities.activity_id
+      WHERE routines.is_public = true
+      GROUP BY routines.id, routine_activities.routine_id
+    `);
     return rows;
   } catch (error) {
     console.log(error);
+  }
+}
+async function getPublicRoutinesByUser(username) {
+  try {
+    const { rows } = client.query(
+      `
+      SELECT 
+        routines.id as id
+        routines.name as goal,
+        CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
+        ELSE 
+        JSON_AGG(
+          JSon_BUILD_OBJECT(
+            'id', activities.id,
+            'name', activities.name,
+            'description', activities.description,
+            'duration', routine_activities.duration,
+            'count', routine_activities.count
+            )
+          ) END AS activities
+          FROM routines
+          JOIN users
+          ON routines.creator_id = users.id
+          FULL OUTER JOIN routines_activities
+          ON routines.id = routine_activities.routine_id
+          FULL OUTER JOIN activities 
+          ON activities.id = routine_activities.activity_id
+          WhHERE users.username = $1 AND routines.is_public = true
+          GROUP BY routines.id, routines_activities.routine_id
+          `,
+      [username]
+    );
+    return rows;
+  } catch (error) {
+    console.error(error);
   }
 }
 
@@ -85,4 +154,6 @@ module.exports = {
   getRoutineById,
   getRoutinesWithoutActivities,
   getAllPublicRoutines,
+  getPublicRoutinesByUser,
+  getAllRoutinesByUser,
 };
