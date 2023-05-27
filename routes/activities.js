@@ -3,8 +3,8 @@ const { getAllActivities } = require("../db/adapters/activities");
 
 activitiesRouter.get("/", async (req, res, next) => {
   try {
-    const users = await getAllActivities();
-    res.send(users);
+    const activity = await getAllActivities();
+    res.send({ activity });
   } catch (error) {
     next(error);
   }
