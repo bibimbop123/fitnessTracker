@@ -139,10 +139,10 @@ async function populateTables() {
     console.log("public routines:", allpublicroutines);
 
     console.log("adding activities to routine");
-    for (const routineActivity of routine_activities) {
-      const addActivityToRoutine = await addActivityToRoutine(routineActivity);
-    }
-    console.log("added activity to routine", addActivityToRoutine);
+
+    const addActivityToRoutineVar = await addActivityToRoutine(2, 2, 30, 10);
+
+    console.log("added activity to routine", addActivityToRoutineVar);
 
     console.log("get routineActivity by id");
     const routineActivitybyId = await getRoutineActivityById(4);
