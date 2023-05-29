@@ -1,24 +1,53 @@
 const { client } = require("../client");
 async function getRoutineActivityById(routineActivityId) {
-  const { rows } = await client.query(
-    `
+  try {
+    const {
+      rows: [routineActivity],
+    } = await client.query(
+      `
       SELECT * FROM routine_activities
-      WHERE id = ${routineActivityId};
-
+      WHERE id = $1
     `,
-    [routineActivityId]
-  );
-  return rows;
+      [routineActivityId]
+    );
+    return routineActivity;
+  } catch (error) {
+    throw error;
+  }
 }
 async function addActivityToRoutine(routine_id, activity_id, duration, count) {
-  const { rows } = await client.query(
-    `
+  try {
+    const { rows } = await client.query(
+      `
       INSERT INTO routine_activities(routine_id, activity_id, duration, count)
       VALUES ($1, $2, $3, $4)
 
     `,
-    [routine_id, activity_id, duration, count]
-  );
-  return rows;
+      [routine_id, activity_id, duration, count]
+    );
+    return rows;
+  } catch (error) {
+    throw error;
+  }
 }
-module.exports = { getRoutineActivityById, addActivityToRoutine };
+async function updateRoutineActivity(routineActivityId, count, duration) {
+  try {
+    const {
+      rows: [routineActivity],
+    } = await client.query(
+      ` UPDATE routine_activities 
+                SET "count" = $2, "duration" = $3
+                WHERE id = $1
+                RETURN * `,
+      [routineActivityId, count, duration]
+    );
+    return routineActivity;
+  } catch (error) {
+    throw error;
+  }
+}
+module.exports = {
+  addActivityToRoutine,
+  getRoutineActivityById,
+  updateRoutineActivity,
+};
