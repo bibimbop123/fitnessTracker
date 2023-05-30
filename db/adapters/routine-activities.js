@@ -22,11 +22,11 @@ async function addActivityToRoutine(routine_id, activity_id, duration, count) {
       `
       INSERT INTO routine_activities(routine_id, activity_id, duration, count)
       VALUES ($1, $2, $3, $4)
-
+      RETURNING *;
     `,
       [routine_id, activity_id, duration, count]
     );
-    return rows;
+    return rows[0];
   } catch (error) {
     throw error;
   }
@@ -39,7 +39,7 @@ async function updateRoutineActivity(routineActivityId, count, duration) {
       ` UPDATE routine_activities 
             SET count = $2, duration = $3
             WHERE id = $1
-            RETURN *
+            RETURNING *;
         `,
       [routineActivityId, count, duration]
     );
