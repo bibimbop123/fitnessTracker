@@ -1,4 +1,5 @@
 const { client } = require("../client");
+
 async function getRoutineActivityById(routineActivityId) {
   try {
     const {
@@ -36,9 +37,10 @@ async function updateRoutineActivity(routineActivityId, count, duration) {
       rows: [routineActivity],
     } = await client.query(
       ` UPDATE routine_activities 
-                SET "count" = $2, "duration" = $3
-                WHERE id = $1
-                RETURN * `,
+            SET count = $2, duration = $3
+            WHERE id = $1
+            RETURN *
+        `,
       [routineActivityId, count, duration]
     );
     return routineActivity;
@@ -46,8 +48,18 @@ async function updateRoutineActivity(routineActivityId, count, duration) {
     throw error;
   }
 }
+async function destroyRoutineActivity(routineActivityId) {
+  await client.query(
+    `DELETE from routine_activities
+        WHERE id = $1
+        `,
+    [routineActivityId]
+  );
+  return;
+}
 module.exports = {
   addActivityToRoutine,
   getRoutineActivityById,
   updateRoutineActivity,
+  destroyRoutineActivity,
 };
