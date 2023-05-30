@@ -154,7 +154,7 @@ async function populateTables() {
     console.log("updatedRoutineActivity:", updatedRoutineActivity);
 
     console.log("destroying routinesActivity");
-    const destroyedRoutineActivtiy = await destroyRoutineActivity();
+    const destroyedRoutineActivity = await destroyRoutineActivity();
     console.log("destroyedRoutineActivity:", destroyedRoutineActivity);
   } catch (error) {
     console.error(error);
