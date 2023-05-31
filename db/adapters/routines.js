@@ -28,7 +28,9 @@ async function getAllRoutines() {
 
 async function getRoutineById(id) {
   console.log("hello");
-  const { rows } = await client.query(
+  const {
+    rows: [routine],
+  } = await client.query(
     `
     SELECT 
       routines.id as id,
@@ -55,19 +57,16 @@ async function getRoutineById(id) {
   `,
     [id]
   );
-  console.log({ rows });
-  return rows;
+
+  return routine;
 }
 async function getRoutinesWithoutActivities() {
-  const {
-    rows: [routine],
-  } = await client.query(`SELECT * FROM routines`);
+  const { rows } = await client.query(`SELECT * from routines`);
+  return rows;
 }
 async function getAllRoutinesByUser(userId) {
   try {
-    const {
-      rows: [routine],
-    } = await client.query(
+    const { rows } = await client.query(
       `
         SELECT *
         FROM routines
@@ -75,6 +74,8 @@ async function getAllRoutinesByUser(userId) {
         `,
       [userId]
     );
+
+    return rows;
   } catch (error) {
     console.log(error);
   }
@@ -148,6 +149,39 @@ async function getPublicRoutinesByUser(username) {
   }
 }
 
+async function getPublicRoutinesByActivity(activityId) {
+  console.log("hello");
+  const { rows } = await client.query(
+    `
+    SELECT 
+      routines.id as id,
+      routines.name as name,
+      routines.goal as goal, 
+        CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
+        ELSE 
+        JSON_AGG(
+          JSON_BUILD_OBJECT(
+          'id', activities.id,
+          'name', activities.name,
+          'description', activities.description,
+          'duration', routine_activities.duration,
+          'count', routine_activities.count
+          )
+        ) END AS activities
+        FROM routines
+        JOIN routine_activities 
+        ON routines.id = routine_activities.routine_id
+        JOIN activities 
+        ON routine_activities.activity_id = activities.id
+        WHERE routines.id = $1
+        GROUP BY routines.id, routine_activities.routine_id
+  `,
+    [id]
+  );
+  console.log({ rows });
+  return rows;
+}
+
 module.exports = {
   createRoutine,
   getAllRoutines,
@@ -156,4 +190,7 @@ module.exports = {
   getAllPublicRoutines,
   getPublicRoutinesByUser,
   getAllRoutinesByUser,
+  getPublicRoutinesByActivity,
+  // updateRoutine,
+  // destroyRoutine,
 };

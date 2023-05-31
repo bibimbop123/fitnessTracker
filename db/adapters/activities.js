@@ -26,11 +26,13 @@ async function getAllActivities() {
 }
 //work on this
 async function getActivityById(id) {
-  const { rows } = await client.query(`
+  const {
+    rows: [activity],
+  } = await client.query(`
     SELECT * FROM activities
     WHERE id=${id};
   `);
-  return rows;
+  return activity;
 }
 
 async function updateActivity(activityId, name, description) {

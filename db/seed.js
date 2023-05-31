@@ -136,11 +136,16 @@ async function populateTables() {
     const routine_ = await getRoutineById(2);
     console.log("the routine you selected is", routine_);
 
+    console.log("getting routine without activities");
+    const routineWithoutActivities = await getRoutinesWithoutActivities();
+    console.log("the routine without activities", routineWithoutActivities);
+
     console.log("getting all public routines");
     const allpublicroutines = await getAllPublicRoutines();
     console.log("public routines:", allpublicroutines);
 
     console.log("adding activities to routine");
+    // loop over RA and call db method
 
     const addedActivityToRoutine = await addActivityToRoutine(2, 2, 30, 10);
 
@@ -166,12 +171,20 @@ async function populateTables() {
   }
 }
 
+async function testDB() {
+  try {
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function rebuildDb() {
   client.connect();
   try {
     await dropTables();
     await createTables();
     await populateTables();
+    await testDB();
   } catch (error) {
     console.error(error);
   } finally {
