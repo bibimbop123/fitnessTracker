@@ -14,6 +14,8 @@ const {
   getRoutineById,
   getRoutinesWithoutActivities,
   getAllPublicRoutines,
+  getPublicRoutinesByActivity,
+  updateRoutine,
 } = require("./adapters/routines");
 
 const {
@@ -144,15 +146,18 @@ async function populateTables() {
     const allpublicroutines = await getAllPublicRoutines();
     console.log("public routines:", allpublicroutines);
 
+    console.log("updating routine");
+    const updatedRoutine = await updateRoutine();
+    console.log("updated routine:", updatedRoutine);
+
     console.log("adding activities to routine");
     // loop over RA and call db method
-
-    const addedActivityToRoutine = await addActivityToRoutine(2, 2, 30, 10);
-
-    console.log("added activity to routine", addedActivityToRoutine);
+    for (const routineActivity of routine_activities) {
+      await addActivityToRoutine({ routineActivity });
+    }
 
     console.log("get routineActivity by id");
-    const routineActivitybyId = await getRoutineActivityById(1);
+    const routineActivitybyId = await getRoutineActivityById(2);
     console.log("routineActivityById:", routineActivitybyId);
 
     console.log("updating routineActivity");
@@ -160,11 +165,11 @@ async function populateTables() {
     console.log("updatedRoutineActivity:", updatedRoutineActivity);
 
     console.log("getting routine activity by routine id");
-    const routineActivityByRoutineId = await getRoutineActivityByRoutine(2);
+    const routineActivityByRoutineId = await getRoutineActivityByRoutine(5);
     console.log("routineActivityByRoutineId", routineActivityByRoutineId);
 
     console.log("destroying routinesActivity");
-    const destroyedRoutineActivity = await destroyRoutineActivity(1);
+    const destroyedRoutineActivity = await destroyRoutineActivity();
     console.log("destroyedRoutineActivity:", destroyedRoutineActivity);
   } catch (error) {
     console.error(error);
