@@ -21,6 +21,7 @@ const {
   getRoutineActivityById,
   updateRoutineActivity,
   destroyRoutineActivity,
+  getRoutineActivityByRoutine,
 } = require("./adapters/routine-activities");
 const {
   users,
@@ -146,15 +147,19 @@ async function populateTables() {
     console.log("added activity to routine", addedActivityToRoutine);
 
     console.log("get routineActivity by id");
-    const routineActivitybyId = await getRoutineActivityById(4);
+    const routineActivitybyId = await getRoutineActivityById(1);
     console.log("routineActivityById:", routineActivitybyId);
 
     console.log("updating routineActivity");
-    const updatedRoutineActivity = await updateRoutineActivity();
+    const updatedRoutineActivity = await updateRoutineActivity(1, 100, 100);
     console.log("updatedRoutineActivity:", updatedRoutineActivity);
 
+    console.log("getting routine activity by routine id");
+    const routineActivityByRoutineId = await getRoutineActivityByRoutine(2);
+    console.log("routineActivityByRoutineId", routineActivityByRoutineId);
+
     console.log("destroying routinesActivity");
-    const destroyedRoutineActivity = await destroyRoutineActivity();
+    const destroyedRoutineActivity = await destroyRoutineActivity(1);
     console.log("destroyedRoutineActivity:", destroyedRoutineActivity);
   } catch (error) {
     console.error(error);

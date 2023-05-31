@@ -57,9 +57,28 @@ async function destroyRoutineActivity(routineActivityId) {
   );
   return;
 }
+
+async function getRoutineActivityByRoutine(routineId) {
+  try {
+    const {
+      rows: [routine],
+    } = await client.query(
+      `
+        SELECT * FROM routine_activities
+        WHERE routine_id = $1
+      `,
+      [routineId]
+    );
+    return routine;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   addActivityToRoutine,
   getRoutineActivityById,
   updateRoutineActivity,
   destroyRoutineActivity,
+  getRoutineActivityByRoutine,
 };
