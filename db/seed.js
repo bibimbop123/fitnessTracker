@@ -16,6 +16,7 @@ const {
   getAllPublicRoutines,
   getPublicRoutinesByActivity,
   updateRoutine,
+  destroyRoutine,
 } = require("./adapters/routines");
 
 const {
@@ -147,7 +148,13 @@ async function populateTables() {
     console.log("public routines:", allpublicroutines);
 
     console.log("updating routine");
-    const updatedRoutine = await updateRoutine();
+    const updatedRoutine = await updateRoutine(
+      3,
+      3,
+      false,
+      "legs",
+      "arnoldgains"
+    );
     console.log("updated routine:", updatedRoutine);
 
     console.log("adding activities to routine");
@@ -155,6 +162,9 @@ async function populateTables() {
     for (const routineActivity of routine_activities) {
       await addActivityToRoutine({ routineActivity });
     }
+    console.log("destroy routines table");
+    const destroyedRoutines = await destroyRoutine(4);
+    console.log("destroyed Routines", destroyedRoutines);
 
     console.log("get routineActivity by id");
     const routineActivitybyId = await getRoutineActivityById(2);

@@ -181,17 +181,16 @@ async function getPublicRoutinesByActivity(activityId) {
   console.log({ rows });
   return rows;
 }
-async function updateRoutine(routineId, is_public, name, goal) {
+async function updateRoutine(routineId, creator_id, is_public, name, goal) {
   try {
     const {
       rows: [updatedRoutine],
     } = await client.query(
       `UPDATE routines
-      SET name = $1, goal = $2, is_public = $3
-      WHERE routineId = id
-      RETURNING *;
+      SET creator_id = $2, name = $4, goal = $5, is_public = $3
+      WHERE  id = $1
     `,
-      [name, goal, is_public]
+      [routineId, creator_id, is_public, name, goal]
     );
     return updatedRoutine;
   } catch (error) {
@@ -199,6 +198,15 @@ async function updateRoutine(routineId, is_public, name, goal) {
   }
 }
 
+async function destroyRoutine(routineId) {
+  await client.query(
+    `DELETE from routines
+          WHERE id = $1
+          `,
+    [routineId]
+  );
+  return;
+}
 module.exports = {
   createRoutine,
   getAllRoutines,
@@ -209,5 +217,5 @@ module.exports = {
   getAllRoutinesByUser,
   getPublicRoutinesByActivity,
   updateRoutine,
-  // destroyRoutine,
+  destroyRoutine,
 };
