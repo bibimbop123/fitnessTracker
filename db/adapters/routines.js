@@ -118,29 +118,30 @@ async function getPublicRoutinesByUser(username) {
     const { rows } = client.query(
       `
       SELECT 
-        routines.id as id
-        routines.name as goal,
-        CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
-        ELSE 
-        JSON_AGG(
-          JSon_BUILD_OBJECT(
-            'id', activities.id,
-            'name', activities.name,
-            'description', activities.description,
-            'duration', routine_activities.duration,
-            'count', routine_activities.count
-            )
-          ) END AS activities
-          FROM routines
-          JOIN users
-          ON routines.creator_id = users.id
-          FULL OUTER JOIN routines_activities
-          ON routines.id = routine_activities.routine_id
-          FULL OUTER JOIN activities 
-          ON activities.id = routine_activities.activity_id
-          WHERE users.username = $1 AND routines.is_public = true
-          GROUP BY routines.id, routines_activities.routine_id
-          `,
+      routines.id as id,
+      routines.name as goal,
+      CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
+      ELSE 
+      JSON_AGG(
+        JSon_BUILD_OBJECT(
+          'id', activities.id,
+          'name', activities.name,
+          'description', activities.description,
+          'duration', routine_activities.duration,
+          'count', routine_activities.count
+          )
+        ) END AS activities
+        FROM routines
+        JOIN users
+        ON routines.creator_id = users.id
+        FULL OUTER JOIN routine_activities
+        ON routines.id = routine_activities.routine_id
+        FULL OUTER JOIN activities 
+        ON activities.id = routine_activities.activity_id
+        WHERE users.username = $1 AND routines.is_public = true
+        GROUP BY routines.id, routine_activities.routine_id
+     
+    `,
       [username]
     );
     return rows;
