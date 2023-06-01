@@ -2,6 +2,9 @@ const authRouter = require("express").Router();
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 const createUser = require("../db/adapters/users.js");
+const { authRequired } = require("./utils.js");
+
+//this is where we create token
 
 // POST /api/auth/register
 authRouter.post("/register", async (req, res, next) => {
@@ -46,6 +49,9 @@ authRouter.get("/logout", async (req, res, next) => {
   }
 });
 
+authRouter.get("/me", authRequired, async (req, res, next) => {
+  res.send(req.user);
+});
 // app.post("/register", (req, res, next) => {
 //   const { username, password } = req.body;
 //   try {
