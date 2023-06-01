@@ -1,8 +1,9 @@
 const authRouter = require("express").Router();
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
-const createUser = require("../db/adapters/users.js");
+const { createUser, getUserByUsername } = require("../db/adapters/users.js");
 const { authRequired } = require("./utils.js");
+const jwt = require("jsonwebtoken");
 
 //this is where we create token
 
@@ -10,11 +11,22 @@ const { authRequired } = require("./utils.js");
 authRouter.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const hashedPassword = bcrypt.hash(password, SALT_ROUNDS);
+
+    const _user = await getUserByUsername(username);
+    if (_user) {
+      next({
+        message: " That user already exists!",
+        name: " Auth Error",
+      });
+      return;
+    }
+
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     const user = await createUser({ username, password, hashedPassword });
     delete user.password;
 
     const token = jwt.sign(user, "wopalopagus");
+    console.log("token:", token);
 
     res.cookie("token", token, {
       sameSite: `strict`,
@@ -52,18 +64,6 @@ authRouter.get("/logout", async (req, res, next) => {
 authRouter.get("/me", authRequired, async (req, res, next) => {
   res.send(req.user);
 });
-// app.post("/register", (req, res, next) => {
-//   const { username, password } = req.body;
-//   try {
-//     const token = jwt.sign({ username, password }, process.env["SECRET"]);
-//     res.send({
-//       message: "Thanks for signing up!",
-//       token: token,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 // app.get("/authenticate", (req, res, next) => {
 //   const authorization = req.headers.authorization;
