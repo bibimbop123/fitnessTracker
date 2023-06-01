@@ -11,7 +11,13 @@ routinesRouter.get("/", async (req, res, next) => {
 });
 routinesRouter.post("/", async (req, res, next) => {
   try {
-    const createdRoutine = await createRoutine({ creator_id, is_public, goal });
+    const { creator_id, is_public, name, goal } = req.body;
+    const createdRoutine = await createRoutine({
+      creator_id,
+      is_public,
+      name,
+      goal,
+    });
     res.send(createdRoutine);
   } catch (error) {
     next(error);
