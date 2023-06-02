@@ -4,14 +4,11 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-let cookieParser = require("cookie-parser");
-
+const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
-
 const cors = require("cors");
 
 const { client } = require("./db/client");
-
 client.connect();
 // Middleware
 app.use(morgan("dev"));
