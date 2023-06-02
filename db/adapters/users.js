@@ -1,5 +1,5 @@
 const { client } = require("../client");
-async function createUser(username, password) {
+async function createUser({ username, password }) {
   try {
     const {
       rows: [user],
