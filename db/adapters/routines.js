@@ -1,4 +1,5 @@
 const { client } = require("../client");
+
 async function createRoutine({ creator_id, is_public, name, goal }) {
   try {
     const {

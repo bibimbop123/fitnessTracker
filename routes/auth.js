@@ -34,7 +34,6 @@ authRouter.post("/register", async (req, res, next) => {
       signed: true,
     });
     delete user.password;
-
     res.send(user);
   } catch (error) {
     next(error);
