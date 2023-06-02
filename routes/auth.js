@@ -48,13 +48,27 @@ authRouter.post("/register", async (req, res, next) => {
 authRouter.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
+
+    const user = await getUserByUsername(username);
     const checkedpassword = await bcrypt.compare(password, user.password);
-    const user = await getUserByUsername({ username, checkedpassword });
-    res.send(user);
+    if (checkedpassword) {
+      delete user.password;
+      const token = jwt.sign(user, process.env.JWT_SECRET);
+      res.cookie("token", token, {
+        sameSite: "strict",
+        httpOnly: true,
+        signed: true,
+      });
+      res.send(user);
+    } else {
+      next({ message: "invalid login credentials" });
+      return;
+    }
   } catch (error) {
     next(error);
   }
 });
+
 authRouter.get("/logout", async (req, res, next) => {
   try {
     res.clearCookie("token", {
