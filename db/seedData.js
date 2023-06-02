@@ -103,83 +103,83 @@ const routine_activities = [
     count: 8,
   },
   //legs
-  {
-    routine_id: 2,
-    activity_id: 1,
-    duration: 1,
-    count: 8,
-  },
-  {
-    routine_id: 2,
-    activity_id: 2,
-    duration: 1,
-    count: 8,
-  },
-  {
-    routine_id: 2,
-    activity_id: 3,
-    duration: 1,
-    count: 8,
-  },
-  {
-    routine_id: 2,
-    activity_id: 4,
-    duration: 1,
-    count: 8,
-  },
-  {
-    routine_id: 2,
-    activity_id: 5,
-    duration: 1,
-    count: 8,
-  },
-  //back
-  {
-    routine_id: 3,
-    activity_id: 11,
-    duration: 1,
-    count: 8,
-  },
-  {
-    routine_id: 3,
-    activity_id: 12,
-    duration: 1,
-    count: 8,
-  },
-  //chest
-  {
-    routine_id: 4,
-    activity_id: 13,
-    duration: 1,
-    count: 8,
-  },
-  {
-    routine_id: 4,
-    activity_id: 14,
-    duration: 1,
-    count: 8,
-  },
-  //abs
-  {
-    routine_id: 5,
-    activity_id: 15,
-    duration: 1,
-    count: 8,
-  },
-  //cardio
-  {
-    routine_id: 6,
-    activity_id: 16,
-    duration: 1,
-    count: 8,
-  },
-  //stretching
-  {
-    routine_id: 7,
-    activity_id: 17,
-    duration: 1,
-    count: 8,
-  },
+  // {
+  //   routine_id: 2,
+  //   activity_id: 1,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // {
+  //   routine_id: 2,
+  //   activity_id: 2,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // {
+  //   routine_id: 2,
+  //   activity_id: 3,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // {
+  //   routine_id: 2,
+  //   activity_id: 4,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // {
+  //   routine_id: 2,
+  //   activity_id: 5,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // //back
+  // {
+  //   routine_id: 3,
+  //   activity_id: 11,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // {
+  //   routine_id: 3,
+  //   activity_id: 12,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // //chest
+  // {
+  //   routine_id: 4,
+  //   activity_id: 13,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // {
+  //   routine_id: 4,
+  //   activity_id: 14,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // //abs
+  // {
+  //   routine_id: 5,
+  //   activity_id: 15,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // //cardio
+  // {
+  //   routine_id: 6,
+  //   activity_id: 16,
+  //   duration: 1,
+  //   count: 8,
+  // },
+  // //stretching
+  // {
+  //   routine_id: 7,
+  //   activity_id: 17,
+  //   duration: 1,
+  //   count: 8,
+  // },
 ];
 
 module.exports = { users, activities, routines, routine_activities };

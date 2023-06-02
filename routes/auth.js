@@ -3,7 +3,10 @@ const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 const { createUser, getUserByUsername } = require("../db/adapters/users.js");
 const { authRequired } = require("./utils.js");
+
 const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = process.env;
+require("dotenv").config();
 
 //this is where we create token
 
@@ -15,7 +18,7 @@ authRouter.post("/register", async (req, res, next) => {
     const _user = await getUserByUsername(username);
     if (_user) {
       next({
-        message: " That user already exists!",
+        message: "That user already exists!",
         name: " Auth Error",
       });
       return;
@@ -23,13 +26,15 @@ authRouter.post("/register", async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     console.log("hashed password:", hashedPassword);
-    const user = await createUser({ username, hashedPassword });
+    const user = await createUser({ username, password: hashedPassword });
 
-    const token = jwt.sign(user, process.env.JWT_TOKEN);
+    console.log("JWT secret:", process.env.JWT_SECRET);
+
+    const token = jwt.sign(user, process.env.JWT_SECRET);
     console.log("token:", token);
 
     res.cookie("token", token, {
-      sameSite: `strict`,
+      sameSite: "strict",
       httpOnly: true,
       signed: true,
     });

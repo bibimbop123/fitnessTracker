@@ -99,27 +99,47 @@ async function createTables() {
 }
 
 async function populateTables() {
-  console.log("populating initial tables");
+  console.log("populating users table...");
   try {
     for (const user of users) {
       await createUser(user);
     }
+    console.log("...users table populated");
 
-    console.log("users table populated");
-
-    console.log("getting user id");
-
-    const user_ = await getUserById(1);
-    console.log("user is", user_);
-
-    const _user = await getUserByUsername("Daniel");
-    console.log("user is", _user);
-
-    console.log("populating activities table");
+    console.log("populating activities table...");
     for (const activity of activities) {
       await createActivity(activity);
     }
-    console.log("activities table populated");
+    console.log("...activities table populated");
+
+    console.log("populating routines tables...");
+    for (const routine of routines) {
+      await createRoutine(routine);
+    }
+    console.log("...routines table populated");
+
+    console.log("adding activities to routines...");
+    // loop over RA and call db method
+    for (const routineActivity of routine_activities) {
+      await addActivityToRoutine({ routineActivity });
+    }
+    console.log("...activities added to routines");
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function testDB() {
+  try {
+    console.log("");
+    console.log("getting user id");
+
+    const user_ = await getUserById(1);
+    console.log("user by ID is", user_);
+
+    const _user = await getUserByUsername("Daniel");
+    console.log("user by username is", _user);
+
     console.log("getting activity by id");
     const activity_ = await getActivityById(7);
     console.log("activity you selected is", activity_);
@@ -131,10 +151,6 @@ async function populateTables() {
     );
     console.log("activity updated", _activity);
 
-    console.log("populating routines tables");
-    for (const routine of routines) {
-      await createRoutine(routine);
-    }
     console.log("getting routine by id");
     const routine_ = await getRoutineById(2);
     console.log("the routine you selected is", routine_);
@@ -157,11 +173,6 @@ async function populateTables() {
     );
     console.log("updated routine:", updatedRoutine);
 
-    console.log("adding activities to routine");
-    // loop over RA and call db method
-    for (const routineActivity of routine_activities) {
-      await addActivityToRoutine({ routineActivity });
-    }
     console.log("destroy routines table");
     const destroyedRoutines = await destroyRoutine(4);
     console.log("destroyed Routines", destroyedRoutines);
@@ -181,13 +192,6 @@ async function populateTables() {
     console.log("destroying routinesActivity");
     const destroyedRoutineActivity = await destroyRoutineActivity();
     console.log("destroyedRoutineActivity:", destroyedRoutineActivity);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function testDB() {
-  try {
   } catch (error) {
     console.error(error);
   }
