@@ -1,12 +1,4 @@
 const authRouter = require("express").Router();
-const bcrypt = require("bcrypt");
-const SALT_ROUNDS = 10;
-
-const { authRequired } = require("./utils.js");
-
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = process.env;
-require("dotenv").config();
 
 //this is where we create token
 
