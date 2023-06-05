@@ -3,6 +3,7 @@ const {
   getAllRoutines,
   createRoutine,
   getRoutineById,
+  updateRoutine,
 } = require("../db/adapters/routines");
 const { authRequired } = require("./utils");
 
@@ -29,22 +30,32 @@ routinesRouter.post("/", async (req, res, next) => {
   }
 });
 
-// routinesRouter.patch("/:id", authRequired, async (req, res, next) => {
-//   const { id } = req.params;
-//   const { creator_id, is_public, name, goal } = req.body;
-//   try {
-//     const routine = await getRoutineById(+req.params.id);
-//     if (req.user.id === routine.creator_id) {
-//       const updatedRoutine = await updateRoutine(+id, req.body);
-//       res.send(updatedRoutine);
-//       console.log("updatedRoutine", updatedRoutine);
-//     } else {
+routinesRouter.get("/:id", async (req, res, next) => {
+  try {
+    const routine = await getRoutineById(req.params.id);
+    console.log("Routine in GET", routine);
+    res.send(routine);
+  } catch (error) {
+    next(error);
+  }
+});
 
-//       alert("you didn't create this routine");
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+routinesRouter.patch("/:id", authRequired, async (req, res, next) => {
+  const { id } = req.params;
+  const { is_public, name, goal } = req.body;
+  try {
+    const routine = await getRoutineById(+id);
+    console.log("Routine???", routine);
+    if (+req.user.id === routine.creator_id) {
+      const updatedRoutine = await updateRoutine(+id, is_public, name, goal);
+      res.send(updatedRoutine);
+      console.log("updatedRoutine", updatedRoutine);
+    } else {
+      res.send("routine by id not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = routinesRouter;
