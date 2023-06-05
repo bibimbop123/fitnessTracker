@@ -34,27 +34,28 @@ async function getRoutineById(id) {
   } = await client.query(
     `
     SELECT 
-      routines.id as id,
-      routines.name as name,
-      routines.goal as goal, 
-        CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
-        ELSE 
-        JSON_AGG(
-          JSON_BUILD_OBJECT(
-          'id', activities.id,
-          'name', activities.name,
-          'description', activities.description,
-          'duration', routine_activities.duration,
-          'count', routine_activities.count
-          )
-        ) END AS activities
-        FROM routines
-        JOIN routine_activities 
-        ON routines.id = routine_activities.routine_id
-        JOIN activities 
-        ON routine_activities.activity_id = activities.id
-        WHERE routines.id = $1
-        GROUP BY routines.id, routine_activities.routine_id
+    routines.id as id,
+    routines.name as name,
+    routines.goal as goal, 
+    routines.creator_id,
+      CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
+      ELSE 
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+        'id', activities.id,
+        'name', activities.name,
+        'description', activities.description,
+        'duration', routine_activities.duration,
+        'count', routine_activities.count
+        )
+      ) END AS activities
+      FROM routines
+      FULL OUTER JOIN routine_activities 
+      ON routines.id = routine_activities.routine_id
+      FULL OUTER JOIN activities 
+      ON routine_activities.activity_id = activities.id
+      WHERE routines.id = $1
+      GROUP BY routines.id, routine_activities.routine_id
   `,
     [id]
   );
@@ -183,16 +184,17 @@ async function getPublicRoutinesByActivity(activityId) {
   console.log({ rows });
   return rows;
 }
-async function updateRoutine(routineId, creator_id, is_public, name, goal) {
+async function updateRoutine(routineId, is_public, name, goal) {
   try {
     const {
       rows: [updatedRoutine],
     } = await client.query(
       `UPDATE routines
-      SET creator_id = $2, name = $4, goal = $5, is_public = $3
+      SET  name = $3, goal = $4, is_public = $2
       WHERE  id = $1
+      RETURNING *
     `,
-      [routineId, creator_id, is_public, name, goal]
+      [routineId, is_public, name, goal]
     );
     return updatedRoutine;
   } catch (error) {
