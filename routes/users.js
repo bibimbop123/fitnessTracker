@@ -93,4 +93,19 @@ usersRouter.get("/me", authRequired, async (req, res, next) => {
   res.send(req.user);
 });
 
+usersRouter.get("/logout", async (req, res, next) => {
+  try {
+    res.clearCookie("token", {
+      sameSite: "strict",
+      httpOnly: true,
+      signed: true,
+    });
+    res.send({
+      loggiedIn: false,
+      message: "Logged Out!",
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = usersRouter;
