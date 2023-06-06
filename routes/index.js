@@ -7,7 +7,6 @@ router.get("/health", (req, res, next) => {
     next(error);
   }
 });
-module.exports = router;
 
 const usersRouter = require("./users");
 router.use("/users", usersRouter);
@@ -17,5 +16,5 @@ const routinesRouter = require("./routines");
 router.use("/routines", routinesRouter);
 const routineActivitiesRouter = require("./routine_activities");
 router.use("/routineactivities", routineActivitiesRouter);
-const authRouter = require("./auth.js");
-router.use("/auth", authRouter);
+
+module.exports = router;

@@ -13,11 +13,12 @@ activitiesRouter.get("/", async (req, res, next) => {
     next(error);
   }
 });
+
 activitiesRouter.post("/", authRequired, async (req, res, next) => {
   try {
     const { name, description } = req.body;
-    const newActivity = await createActivity(name, description);
-    res.send("new activity created!:", newActivity);
+    const newActivity = await createActivity({ name, description });
+    res.send(newActivity);
   } catch (error) {
     next(error);
   }
