@@ -13,11 +13,6 @@ activitiesRouter.get("/", async (req, res, next) => {
     next(error);
   }
 });
-activitiesRouter.patch(
-  "/:activityId",
-  authRequired,
-  async (req, res, next) => {}
-);
 
 activitiesRouter.post("/", authRequired, async (req, res, next) => {
   try {

@@ -4,6 +4,7 @@ const {
   createRoutine,
   getRoutineById,
   updateRoutine,
+  destroyRoutine,
 } = require("../db/adapters/routines");
 const { authRequired } = require("./utils");
 
@@ -52,6 +53,20 @@ routinesRouter.patch("/:id", authRequired, async (req, res, next) => {
       console.log("updatedRoutine", updatedRoutine);
     } else {
       res.send("routine by id not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+routinesRouter.delete("/:routineId", authRequired, async (req, res, next) => {
+  try {
+    const { routineId } = req.params;
+    if ((req.user.id = routineId.creator_id)) {
+      const routine = await destroyRoutine(routineId);
+      res.send("Routine is deleted:", routine);
+    } else {
+      next({ message: "you are not authorized to delete this routine" });
     }
   } catch (error) {
     next(error);
