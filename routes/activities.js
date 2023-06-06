@@ -2,6 +2,7 @@ const activitiesRouter = require("express").Router();
 const {
   getAllActivities,
   createActivity,
+  updateActivity,
 } = require("../db/adapters/activities");
 const { authRequired } = require("./utils");
 
@@ -19,6 +20,16 @@ activitiesRouter.post("/", authRequired, async (req, res, next) => {
     const { name, description } = req.body;
     const newActivity = await createActivity({ name, description });
     res.send(newActivity);
+  } catch (error) {
+    next(error);
+  }
+});
+activitiesRouter.patch("/:activityId", authRequired, async (req, res, next) => {
+  try {
+    const { activityId } = req.params;
+    const { name, description } = req.body;
+    const updatedActivity = await updateActivity(activityId, name, description);
+    res.send(updatedActivity);
   } catch (error) {
     next(error);
   }
