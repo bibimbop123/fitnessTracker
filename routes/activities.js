@@ -3,6 +3,7 @@ const {
   getAllActivities,
   createActivity,
 } = require("../db/adapters/activities");
+const { getPublicRoutinesByActivity } = require("../db/adapters/routines");
 const { authRequired } = require("./utils");
 
 activitiesRouter.get("/", async (req, res, next) => {
@@ -19,6 +20,17 @@ activitiesRouter.post("/", authRequired, async (req, res, next) => {
     const { name, description } = req.body;
     const newActivity = await createActivity({ name, description });
     res.send(newActivity);
+  } catch (error) {
+    next(error);
+  }
+});
+activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
+  try {
+    const { activityId } = req.params;
+    const publicRoutineswithActivity = await getPublicRoutinesByActivity(
+      activityId
+    );
+    res.send(publicRoutineswithActivity);
   } catch (error) {
     next(error);
   }
