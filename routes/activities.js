@@ -32,9 +32,10 @@ activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
       activityId
     );
     res.send(publicRoutineswithActivity);
-  }catch (error){
-    next(error)
+  } catch (error) {
+    next(error);
   }
+});
 activitiesRouter.patch("/:activityId", authRequired, async (req, res, next) => {
   try {
     const { activityId } = req.params;
@@ -44,7 +45,6 @@ activitiesRouter.patch("/:activityId", authRequired, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
 });
 
-module.exports = activitiesRouter
+module.exports = activitiesRouter;
