@@ -164,13 +164,7 @@ async function testDB() {
     console.log("public routines:", allpublicroutines);
 
     console.log("updating routine");
-    const updatedRoutine = await updateRoutine(
-      3,
-      3,
-      false,
-      "legs",
-      "arnoldgains"
-    );
+    const updatedRoutine = await updateRoutine(3, false, "legs", "arnoldgains");
     console.log("updated routine:", updatedRoutine);
 
     console.log("destroy routines table");
