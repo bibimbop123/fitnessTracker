@@ -1,4 +1,25 @@
-:root {
+#root {
+  display: flex;
+  justify-content: center;
+  font-family: "Roboto", sans-serif;
+  /* width: 100%; */
+}
+
+.App {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -66,4 +87,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

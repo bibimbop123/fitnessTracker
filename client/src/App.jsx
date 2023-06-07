@@ -1,26 +1,19 @@
-import { useState, useEffect } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./components/Home";
+import RoutinesComponent from "./components/Routines";
 
 function App() {
-  const [healthMessage, setHealthMessage] = useState("");
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    async function checkAPIHealth() {
-      try {
-        const response = await fetch("/api/health");
-        const result = await response.json();
-        console.log("result:", result);
-        setHealthMessage(result.message);
-      } catch (error) {
-        setError(error);
-      }
-    }
-    checkAPIHealth();
-  }, []);
   return (
-    <>
-      {error && <p>{JSON.stringify(error, null, 2)}</p>}
-      <p>{healthMessage}</p>
-    </>
+    <div>
+      <nav>
+        <Link to="/">HOME</Link>
+        <Link to="/routines">Routines</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/routines" element={<RoutinesComponent />} />
+      </Routes>
+    </div>
   );
 }
 
