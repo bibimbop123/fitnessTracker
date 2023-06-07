@@ -176,8 +176,8 @@ async function getPublicRoutinesByActivity(activityId) {
       ON routines.id = routine_activities.routine_id
       FULL OUTER JOIN activities 
       ON activities.id = routine_activities.activity_id
-      WHERE routines.is_public = true
-      GROUP BY routines.id, routine_activities.routine_id
+      WHERE routines.is_public = true AND routine_activities.activity_id = $1
+      GROUP BY routines.id, routine_activities.routine_id, routine_activities.activity_id
       `,
     [activityId]
   );

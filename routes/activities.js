@@ -26,7 +26,7 @@ activitiesRouter.post("/", authRequired, async (req, res, next) => {
 });
 activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
   try {
-    const { activityId } = req.params;
+    const { activityId } = req.params.activityId;
     const publicRoutineswithActivity = await getPublicRoutinesByActivity(
       activityId
     );
