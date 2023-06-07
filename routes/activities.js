@@ -4,6 +4,7 @@ const {
   createActivity,
   updateActivity,
 } = require("../db/adapters/activities");
+const { getPublicRoutinesByActivity } = require("../db/adapters/routines");
 const { authRequired } = require("./utils");
 
 activitiesRouter.get("/", async (req, res, next) => {
@@ -24,6 +25,17 @@ activitiesRouter.post("/", authRequired, async (req, res, next) => {
     next(error);
   }
 });
+activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
+  try {
+    const { activityId } = req.params.activityId;
+    const publicRoutineswithActivity = await getPublicRoutinesByActivity(
+      activityId
+    );
+    res.send(publicRoutineswithActivity);
+  } catch (error) {
+    next(error);
+  }
+});
 activitiesRouter.patch("/:activityId", authRequired, async (req, res, next) => {
   try {
     const { activityId } = req.params;
@@ -34,4 +46,5 @@ activitiesRouter.patch("/:activityId", authRequired, async (req, res, next) => {
     next(error);
   }
 });
+
 module.exports = activitiesRouter;

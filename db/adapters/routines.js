@@ -156,12 +156,12 @@ async function getPublicRoutinesByActivity(activityId) {
   const { rows } = await client.query(
     `
     SELECT 
-    routines.id as id
+    routines.id as id,
     routines.name as goal,
     CASE WHEN routine_activities.activity_id IS NULL THEN '[]'::json
     ELSE 
     JSON_AGG(
-      JSon_BUILD_OBJECT(
+      JSON_BUILD_OBJECT(
         'id', activities.id,
         'name', activities.name,
         'description', activities.description,
@@ -172,12 +172,12 @@ async function getPublicRoutinesByActivity(activityId) {
       FROM routines
       JOIN users
       ON routines.creator_id = users.id
-      FULL OUTER JOIN routines_activities
+      FULL OUTER JOIN routine_activities
       ON routines.id = routine_activities.routine_id
       FULL OUTER JOIN activities 
       ON activities.id = routine_activities.activity_id
-      WHERE routines.is_public = true
-      GROUP BY routines.id, routines_activities.routine_id
+      WHERE routines.is_public = true AND routine_activities.activity_id = $1
+      GROUP BY routines.id, routine_activities.routine_id, routine_activities.activity_id
       `,
     [activityId]
   );
