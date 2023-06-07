@@ -27,11 +27,12 @@ activitiesRouter.post("/", authRequired, async (req, res, next) => {
 });
 activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
   try {
-    const { activityId } = req.params.activityId;
-    const publicRoutineswithActivity = await getPublicRoutinesByActivity(
-      activityId
-    );
-    res.send(publicRoutineswithActivity);
+    // const { activityId } = req.params.activityId;
+    // const publicRoutineswithActivity = await getPublicRoutinesByActivity(
+    //   activityId
+    // );
+    // res.send(publicRoutineswithActivity);
+    res.send("routine activity found");
   } catch (error) {
     next(error);
   }
