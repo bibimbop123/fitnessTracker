@@ -14,14 +14,14 @@ routinesActivitiesRouter.get("/", async (req, res, next) => {
   }
 });
 
-// //post  /routine_activities
-// routinesActivitiesRouter.post("/", async (req, res, next)=>{
-//   try {
-//     const newRoutineActivities = await addActivityToRoutine()
-//     res.send(newRoutineActivities)
-//   } catch (error){
-//     next(error)
-//   }
-// })
+//post  /routine_activities
+routinesActivitiesRouter.post("/", async (req, res, next) => {
+  try {
+    const newRoutineActivities = await addActivityToRoutine();
+    res.send(newRoutineActivities);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = routinesActivitiesRouter;
