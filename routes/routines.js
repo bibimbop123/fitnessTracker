@@ -64,7 +64,7 @@ routinesRouter.delete("/:routineId", authRequired, async (req, res, next) => {
     const { routineId } = req.params;
     if ((req.user.id = routineId.creator_id)) {
       const routine = await destroyRoutine(routineId);
-      res.send("Routine is deleted:", routine);
+      res.send(routine);
     } else {
       next({ message: "you are not authorized to delete this routine" });
     }
