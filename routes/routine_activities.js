@@ -5,6 +5,9 @@ const {
   updateRoutineActivity,
   destroyRoutineActivity,
 } = require("../db/adapters/routine-activities");
+const { getRoutineById } = require("../db/adapters/routines");
+const { getUserByUsername } = require("../db/adapters/users");
+const { routines } = require("../db/seedData");
 const { authRequired } = require("./utils");
 
 routinesActivitiesRouter.get("/", async (req, res, next) => {
@@ -69,11 +72,22 @@ routinesActivitiesRouter.patch(
 
 routinesActivitiesRouter.delete(
   "/:routineId/:activityId",
+  authRequired,
   async (req, res, next) => {
-    const { routineId, activityId } = req.params;
     // get the routineById and make sure the req.user.id is the routine's crator_id
     try {
-      // DELETE FROM routine_activities where routine_id = req.params.routineId AND activity_id = req.params.acitivtyId
+      const routine = await getRoutineById(+req.params.routineId);
+      const { routine_id, activity_id } = req.params;
+      console.log(req.user.id);
+      if (req.user.id === routine.creator_id) {
+        const destroyedActivityRoutine = await destroyRoutineActivity(
+          routine_id,
+          activity_id
+        );
+        console.log("destroyedActivityRoutine:", destroyedActivityRoutine);
+      }
+      res.send(destroyedActivityRoutine);
+      // DELETE FROM routine_activities where routine_id = ( this will be $1 --req.params.routineId) AND activity_id = ( this will be $2 req.params.acitivtyId
     } catch (error) {
       next(error);
     }

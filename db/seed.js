@@ -184,7 +184,7 @@ async function testDB() {
     console.log("routineActivityByRoutineId", routineActivityByRoutineId);
 
     console.log("destroying routinesActivity");
-    const destroyedRoutineActivity = await destroyRoutineActivity();
+    const destroyedRoutineActivity = await destroyRoutineActivity(1, 1);
     console.log("destroyedRoutineActivity:", destroyedRoutineActivity);
   } catch (error) {
     console.error(error);

@@ -50,14 +50,14 @@ async function updateRoutineActivity(routineActivityId, count, duration) {
     throw error;
   }
 }
-async function destroyRoutineActivity(routineActivityId) {
+async function destroyRoutineActivity(routine_id, activity_id) {
   await client.query(
     `DELETE FROM routine_activities
-    WHERE id = $1
+    WHERE routineId = $1 AND activityId = $2
     RETURNING *
   ;
         `,
-    [routineActivityId]
+    [routine_id, activity_id]
   );
   return;
 }
