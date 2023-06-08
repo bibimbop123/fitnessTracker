@@ -44,10 +44,16 @@ activitiesRouter.patch("/:activityId", authRequired, async (req, res, next) => {
   try {
     const { activityId } = req.params;
     const { name, description } = req.body;
-    const updatedActivity = await updateActivity(activityId, name, description);
+    const updatedActivity = await updateActivity(
+      activityId,
+      name,
+      description,
+      req.user.id
+    );
+
     res.send(updatedActivity);
   } catch (error) {
-    next(error);
+    next({ message: "invalid user credentials" });
   }
 });
 

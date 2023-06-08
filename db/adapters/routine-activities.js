@@ -31,17 +31,22 @@ async function addActivityToRoutine(routine_id, activity_id, duration, count) {
     throw error;
   }
 }
-async function updateRoutineActivity(routineActivityId, count, duration) {
+async function updateRoutineActivity(
+  routineActivityId,
+  count,
+  duration,
+  creator_id
+) {
   try {
     const {
       rows: [routineActivity],
     } = await client.query(
       ` UPDATE routine_activities 
-            SET count = $2, duration = $3
-            WHERE id = $1
+            SET count = $1, duration = $2
+            WHERE id = $3 AND routine_activities.routine_id = creator_id AND routines.creator_id = $4
             RETURNING *;
         `,
-      [routineActivityId, count, duration]
+      [count, duration, routineActivityId, creator_id]
     );
     return routineActivity;
   } catch (error) {

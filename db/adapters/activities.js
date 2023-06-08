@@ -35,7 +35,7 @@ async function getActivityById(id) {
   return activity;
 }
 
-async function updateActivity(activityId, name, description) {
+async function updateActivity(activityId, name, description, creator_Id) {
   // const setString = Object.keys(fields)
   //   .map((key, index) => `"${key}"=$${index + 1}`)
   //   .join(", ");
@@ -49,18 +49,15 @@ async function updateActivity(activityId, name, description) {
       rows: [activity],
     } = await client.query(
       `
-        UPDATE activities
-        SET name = $1, description = $2
-        JOIN users
-      ON routines.creator_id = users.id
-      FULL OUTER JOIN routine_activities
+      UPDATE activities
+      SET name = $1, description = $2     
+      FROM routine_activities
+      FULL OUTER JOIN routines
       ON routines.id = routine_activities.routine_id
-      FULL OUTER JOIN activities 
-      ON activities.id = routine_activities.activity_id
-        WHERE id = $3 
-        RETURNING *;
+      WHERE activities.id = $3 AND routine_activities.activity_id = activities.id AND routines.creator_id = $4
+      returning *
       `,
-      [name, description, activityId]
+      [name, description, activityId, creator_Id]
     );
 
     return activity;
