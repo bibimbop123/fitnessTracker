@@ -42,6 +42,7 @@ async function getRoutineById(id) {
       ELSE 
       JSON_AGG(
         JSON_BUILD_OBJECT(
+        'routineActivityid', routine_activities.id,
         'id', activities.id,
         'name', activities.name,
         'description', activities.description,

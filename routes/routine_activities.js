@@ -25,8 +25,6 @@ routinesActivitiesRouter.post("/", async (req, res, next) => {
   }
 });
 
-//PATCH /routine_activities/:routineActivityId
-// you still need to check to see if the correct user is updating routineActivity data
 routinesActivitiesRouter.patch(
   "/:routineActivityId",
   authRequired,
@@ -47,15 +45,35 @@ routinesActivitiesRouter.patch(
 );
 //delete /routine_activities/:routineActivityId
 // you still need to check to see if the correct user is updating routineActivity data
+// routinesActivitiesRouter.delete(
+//   "/:routineActivityId",
+//   authRequired,
+//   async (req, res, next) => {
+//     try {
+//       // Check if the req.user.id is the same as the routine ID (you have this because of the authRequired function)
+//       //  Get the routine_activity by its id first!
+//       //  compare the routine_id and get the associated routine
+//       //  check if the associated routine's creator_id is equal to our req.user.id
+
+//       const { routineActivityId } = req.params;
+//       const destroyedActivityRoutine = await destroyRoutineActivity(
+//         routineActivityId
+//       );
+//       console.log("destroyedActvityRoutine", destroyedActivityRoutine);
+//       res.send(destroyedActivityRoutine);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
 routinesActivitiesRouter.delete(
-  "/:routineActivityId",
-  authRequired,
+  "/:routineId/:activityId",
   async (req, res, next) => {
+    const { routineId, activityId } = req.params;
+    // get the routineById and make sure the req.user.id is the routine's crator_id
     try {
-      const { routineActivityId } = req.params;
-      const destroyedActivityRoutine = await destroyRoutineActivity();
-      console.log("destroyedActvityRoutine", destroyedActivityRoutine);
-      res.send(destroyedActivityRoutine);
+      // DELETE FROM routine_activities where routine_id = req.params.routineId AND activity_id = req.params.acitivtyId
     } catch (error) {
       next(error);
     }

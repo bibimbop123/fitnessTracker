@@ -31,22 +31,19 @@ async function addActivityToRoutine(routine_id, activity_id, duration, count) {
     throw error;
   }
 }
-async function updateRoutineActivity(
-  routineActivityId,
-  count,
-  duration,
-  creator_id
-) {
+async function updateRoutineActivity(routineActivityId, count, duration) {
   try {
     const {
       rows: [routineActivity],
     } = await client.query(
-      ` UPDATE routine_activities 
-            SET count = $1, duration = $2
-            WHERE id = $3 AND routine_activities.routine_id = creator_id AND routines.creator_id = $4
-            RETURNING *;
+      `   UPDATE routine_activities 
+      SET count = $1, duration = $2
+      from users
+      join routines
+      on users.id = routines.creator_id
+      WHERE routine_activities.id = $3 AND routines.creator_id = users.id
         `,
-      [count, duration, routineActivityId, creator_id]
+      [count, duration, routineActivityId]
     );
     return routineActivity;
   } catch (error) {
@@ -55,8 +52,10 @@ async function updateRoutineActivity(
 }
 async function destroyRoutineActivity(routineActivityId) {
   await client.query(
-    `DELETE from routine_activities
-        WHERE id = $1
+    `DELETE FROM routine_activities
+    WHERE id = $1
+    RETURNING *
+  ;
         `,
     [routineActivityId]
   );
