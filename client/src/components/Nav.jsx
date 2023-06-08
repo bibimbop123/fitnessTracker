@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-// import { logout } from "../api/auth";
+import { logout } from "../api/auth";
 
 export default function Nav() {
   async function handeLogout() {
