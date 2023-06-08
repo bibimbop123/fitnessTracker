@@ -15,7 +15,7 @@ activitiesRouter.get("/", async (req, res, next) => {
     next(error);
   }
 });
-//check if user is authorized, and compare req.user.id = creator_id
+
 activitiesRouter.post("/", authRequired, async (req, res, next) => {
   try {
     const { name, description } = req.body;
@@ -25,6 +25,7 @@ activitiesRouter.post("/", authRequired, async (req, res, next) => {
     next(error);
   }
 });
+
 activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
   try {
     const { activityId } = req.params.activityId;

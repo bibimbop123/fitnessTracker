@@ -51,6 +51,12 @@ async function updateActivity(activityId, name, description) {
       `
         UPDATE activities
         SET name = $1, description = $2
+        JOIN users
+      ON routines.creator_id = users.id
+      FULL OUTER JOIN routine_activities
+      ON routines.id = routine_activities.routine_id
+      FULL OUTER JOIN activities 
+      ON activities.id = routine_activities.activity_id
         WHERE id = $3 
         RETURNING *;
       `,
