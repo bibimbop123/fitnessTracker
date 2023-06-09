@@ -23,7 +23,12 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
     "pg": "^8.11.0",
+<<<<<<< HEAD
     "prop-types": "^15.8.1",
     "react-router-dom": "^6.12.0"
+=======
+    "react": "^18.2.0",
+    "react-router-dom": "^6.12.1"
+>>>>>>> bb7a6165cd65e14fd0a184406501fa505b6bba72
   }
 }
