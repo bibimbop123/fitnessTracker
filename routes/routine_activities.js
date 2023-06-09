@@ -53,7 +53,7 @@ routinesActivitiesRouter.patch(
 //   authRequired,
 //   async (req, res, next) => {
 //     try {
-//       // Check if the req.user.id is the same as the routine ID (you have this because of the authRequired function)
+//       // Check if the req.user.id is the same as the routine creator ID (you have this because of the authRequired function)
 //       //  Get the routine_activity by its id first!
 //       //  compare the routine_id and get the associated routine
 //       //  check if the associated routine's creator_id is equal to our req.user.id
@@ -85,8 +85,11 @@ routinesActivitiesRouter.delete(
           activity_id
         );
         console.log("destroyedActivityRoutine:", destroyedActivityRoutine);
+        res.send(destroyedActivityRoutine);
+      } else {
+        next({ message: "You are not authorized to edit this routine" });
       }
-      res.send(destroyedActivityRoutine);
+
       // DELETE FROM routine_activities where routine_id = ( this will be $1 --req.params.routineId) AND activity_id = ( this will be $2 req.params.acitivtyId
     } catch (error) {
       next(error);

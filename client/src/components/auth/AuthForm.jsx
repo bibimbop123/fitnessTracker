@@ -14,6 +14,7 @@ export default function AuthForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     try {
       let result;
       if (pathname === "register") {
@@ -21,6 +22,7 @@ export default function AuthForm() {
       } else {
         result = await loginUser(username, password);
       }
+      console.log("Result after login or register: ", result);
       if (result.success) {
         setLoggedIn(true);
         console.log("Auth Results", result);
@@ -34,7 +36,7 @@ export default function AuthForm() {
   return (
     <div>
       <div className="form">
-        <form onClick={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           {pathname === "/register" ? (
             <h2>Register Form</h2>
           ) : (

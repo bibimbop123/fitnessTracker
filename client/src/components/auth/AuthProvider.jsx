@@ -21,6 +21,7 @@ const AuthProvider = ({ children }) => {
     }
     getMe();
   }, [loggedIn]);
+
   const contextValue = {
     user,
     setUser,

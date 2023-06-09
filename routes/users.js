@@ -60,7 +60,11 @@ usersRouter.post("/register", async (req, res, next) => {
       signed: true,
     });
     delete user.password;
-    res.send({ user, token });
+    res.send({
+      success: true,
+      message: "Thank you for regisering",
+      data: user,
+    });
   } catch (error) {
     next(error);
   }

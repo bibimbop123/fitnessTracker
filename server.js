@@ -32,6 +32,7 @@ app.use((req, res, next) => {
 // Error Handler
 app.use((err, req, res, next) => {
   res.send({
+    success: false,
     message: err.message,
     name: err.name,
     stack: err.stack,

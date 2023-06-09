@@ -52,7 +52,8 @@ async function updateRoutineActivity(routineActivityId, count, duration) {
 }
 async function destroyRoutineActivity(routine_id, activity_id) {
   await client.query(
-    `DELETE FROM routine_activities
+    `
+    DELETE FROM routine_activities
     WHERE routineId = $1 AND activityId = $2
     RETURNING *
   ;
