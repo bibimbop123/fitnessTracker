@@ -38,8 +38,6 @@ activitiesRouter.get("/:activityId/routines", async (req, res, next) => {
   }
 });
 
-// check if user is authorized and make sure req.user.id = creator_id
-// join the routines activities table and then check req.user.id= creatorid
 activitiesRouter.patch("/:activityId", authRequired, async (req, res, next) => {
   try {
     const { activityId } = req.params;
