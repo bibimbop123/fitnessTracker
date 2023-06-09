@@ -49,9 +49,9 @@ usersRouter.post("/register", async (req, res, next) => {
     console.log("hashed password:", hashedPassword);
     const user = await createUser({ username, password: hashedPassword });
 
-    console.log("JWT secret:", process.env.JWT_SECRET);
+    console.log("JWT secret:", JWT_SECRET);
 
-    const token = jwt.sign(user, process.env.JWT_SECRET);
+    const token = jwt.sign(user, JWT_SECRET);
     console.log("token:", token);
 
     res.cookie("token", token, {
@@ -77,7 +77,7 @@ usersRouter.post("/login", async (req, res, next) => {
     const checkedpassword = await bcrypt.compare(password, user.password);
     if (checkedpassword) {
       delete user.password;
-      const token = jwt.sign(user, process.env.JWT_SECRET);
+      const token = jwt.sign(user, JWT_SECRET);
       res.cookie("token", token, {
         sameSite: "strict",
         httpOnly: true,

@@ -17,8 +17,9 @@ export default function AuthForm() {
 
     try {
       let result;
-      if (pathname === "register") {
+      if (pathname === "/register") {
         result = await registerUser(username, password);
+        console.log("result:", result);
       } else {
         result = await loginUser(username, password);
       }
@@ -48,12 +49,14 @@ export default function AuthForm() {
             type="text"
             name="username"
             placeholder="username"
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
             required
             type="text"
             name="password"
+            value={password}
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
