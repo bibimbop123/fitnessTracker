@@ -23,6 +23,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
     "pg": "^8.11.0",
+    "prop-types": "^15.8.1",
     "react-router-dom": "^6.12.0"
   }
 }

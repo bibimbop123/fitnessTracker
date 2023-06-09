@@ -1,7 +1,5 @@
 const authRouter = require("express").Router();
 
-//this is where we create token
-
 authRouter.get("/logout", async (req, res, next) => {
   try {
     res.clearCookie("token", {
@@ -10,7 +8,7 @@ authRouter.get("/logout", async (req, res, next) => {
       signed: true,
     });
     res.send({
-      loggiedIn: false,
+      success: true,
       message: "Logged Out!",
     });
   } catch (error) {

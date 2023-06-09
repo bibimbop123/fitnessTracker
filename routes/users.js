@@ -89,10 +89,6 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 });
 
-usersRouter.get("/me", authRequired, async (req, res, next) => {
-  res.send(req.user);
-});
-
 usersRouter.get("/logout", async (req, res, next) => {
   try {
     res.clearCookie("token", {
@@ -101,11 +97,15 @@ usersRouter.get("/logout", async (req, res, next) => {
       signed: true,
     });
     res.send({
-      loggiedIn: false,
+      success: true,
       message: "Logged Out!",
     });
   } catch (error) {
     next(error);
   }
+});
+
+usersRouter.get("/me", authRequired, async (req, res, next) => {
+  res.send({ success: true, message: "you are authorized", user: req.user });
 });
 module.exports = usersRouter;
