@@ -48,3 +48,14 @@ export async function logout() {
   }
   return { success, message, data };
 }
+
+export async function fetchMe() {
+  const response = await fetch("/api/users/me");
+  const { success, message, user } = await response.json();
+  if (!success) {
+    throw {
+      message,
+    };
+  }
+  return { success, message, user };
+}
