@@ -7,10 +7,6 @@ import AuthForm from "./components/auth/AuthForm";
 function App() {
   return (
     <div>
-      {/* <nav>
-        <Link to="/">HOME</Link>
-        <Link to="/routines">Routines</Link>
-      </nav> */}
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
