@@ -5,17 +5,17 @@ import { fetchMe } from "../../API/usersAuth";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({ username: "guest" });
+  const [user, setUser] = useState({ username: "Guest" });
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     async function getMe() {
       try {
-        const { user } = await fetchMe();
+        const { message, success, user } = await fetchMe();
         setUser(user);
         setLoggedIn(true);
       } catch (error) {
-        setUser({ username: "guest" });
+        setUser({ username: "Guest" });
         setLoggedIn(false);
       }
     }
@@ -27,12 +27,12 @@ const AuthProvider = ({ children }) => {
     loggedIn,
     setLoggedIn,
   };
-
   AuthProvider.propTypes = {
     children: PropTypes.node.isRequired,
   };
 
   console.log("user from Auth Context", user);
+
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
