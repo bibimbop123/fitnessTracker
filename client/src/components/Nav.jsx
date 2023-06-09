@@ -15,6 +15,7 @@ export default function Nav() {
       <h3>Hello,{user.username}</h3>
       <Link to="/register">Register</Link>
       <Link to="/login">Login</Link>
+      <Link to="/routines">Routines</Link>
       <button onClick={handeLogout}>Logout</button>
     </nav>
   );

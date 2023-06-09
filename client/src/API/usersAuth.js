@@ -2,7 +2,7 @@ export async function registerUser(username, password) {
   const response = await fetch("api/users/register", {
     method: "POST",
     headers: {
-      "Content-Type": "application.json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       username,
@@ -22,7 +22,7 @@ export async function loginUser(username, password) {
   const response = await fetch("/api/users/login", {
     method: "POST",
     headers: {
-      "Content-Type": "application.json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       username,
