@@ -5,7 +5,7 @@ import { fetchMe } from "../../API/usersAuth";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({ username: "Guest" });
+  const [user, setUser] = useState({ username: "Stranger" });
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
         setUser(user);
         setLoggedIn(true);
       } catch (error) {
-        setUser({ username: "Guest" });
+        setUser({ username: "Stranger" });
         setLoggedIn(false);
       }
     }

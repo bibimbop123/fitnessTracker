@@ -19,7 +19,6 @@ export default function AuthForm() {
       let result;
       if (pathname === "/register") {
         result = await registerUser(username, password);
-        console.log("result:", result);
       } else {
         result = await loginUser(username, password);
       }
@@ -36,42 +35,37 @@ export default function AuthForm() {
   }
 
   return (
-    <div>
-      <div className="form">
+    <div className="auth-form-container">
+      <div className="auth-form">
         <form onSubmit={handleSubmit}>
-          {pathname === "/register" ? (
-            <h2>Register Form</h2>
-          ) : (
-            <h2>Login Form</h2>
-          )}
-          {error && <p>{error}</p>}
+          <h2>{pathname === "/register" ? "Register" : "Login"}</h2>
+          {error && <p className="error-message">{error}</p>}
           <input
             required
             type="text"
             name="username"
-            placeholder="username"
+            placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
             required
-            type="text"
+            type="password"
             name="password"
+            placeholder="Password"
             value={password}
-            placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button>Submit</button>
+          <button type="submit">Submit</button>
         </form>
-        {pathname === "/register" ? (
-          <p>
-            Already have an account? <Link to="/login">Login Here</Link>
-          </p>
-        ) : (
-          <p>
-            Dont have an account? <Link to="/register">Sign Up</Link>
-          </p>
-        )}
+        <p>
+          {pathname === "/register"
+            ? "Already have an account? "
+            : "Don't have an account? "}
+          <Link to={pathname === "/register" ? "/login" : "/register"}>
+            {pathname === "/login" ? "Login Here" : "Sign Up"}
+          </Link>
+        </p>
       </div>
     </div>
   );

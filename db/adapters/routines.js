@@ -20,9 +20,11 @@ async function createRoutine({ creator_id, is_public, name, goal }) {
 }
 async function getAllRoutines() {
   const { rows } = await client.query(`
-    SELECT * FROM routines
-    INNER JOIN activities 
-    ON routines.id = activities.id;
+  SELECT * FROM routines
+  INNER JOIN activities 
+  ON routines.id = activities.id
+  INNER JOIN users
+  ON routines.creator_id = users.id
   `);
   return rows;
 }

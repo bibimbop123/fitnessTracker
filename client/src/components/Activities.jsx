@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 const ActivitiesComponent = () => {
   const [activities, setActivities] = useState([]);
+
   useEffect(() => {
     async function fetchActivities() {
       const response = await getActivities();
@@ -10,17 +11,17 @@ const ActivitiesComponent = () => {
     }
     fetchActivities();
   }, []);
+
   console.log("activities??", activities);
+
   return (
-    <div>
-      {activities.map((activity, idx) => {
-        return (
-          <div key={idx}>
-            <h1>{activity.name}</h1>
-            <p>{activity.description}</p>
-          </div>
-        );
-      })}
+    <div className="activities-container">
+      {activities.map((activity, idx) => (
+        <div key={idx} className="activity-card">
+          <h1 className="activity-card__name">{activity.name}</h1>
+          <p className="activity-card__description">{activity.description}</p>
+        </div>
+      ))}
     </div>
   );
 };
