@@ -5,14 +5,13 @@ import { fetchMe } from "../../API/usersAuth";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState({ username: "Stranger" });
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     async function getMe() {
       try {
-        const { message, success, user } = await fetchMe(token);
+        const { message, success, user } = await fetchMe();
         setUser(user);
         setLoggedIn(true);
       } catch (error) {
@@ -21,15 +20,13 @@ const AuthProvider = ({ children }) => {
       }
     }
     getMe();
-  }, [loggedIn, token]);
+  }, [loggedIn]);
 
   const contextValue = {
     user,
     setUser,
     loggedIn,
     setLoggedIn,
-    token,
-    setToken,
   };
   AuthProvider.propTypes = {
     children: PropTypes.node.isRequired,

@@ -10,6 +10,8 @@ export async function registerUser(username, password) {
     }),
   });
   const { success, message, data } = await response.json();
+  console.log("hi");
+  console.log("response.json:", response.json);
   if (!success) {
     throw {
       message,
