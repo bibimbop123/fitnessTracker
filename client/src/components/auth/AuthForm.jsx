@@ -17,9 +17,9 @@ export default function AuthForm() {
 
     try {
       let result;
-      if (pathname === "/api/users/register") {
+      if (pathname === "/register") {
         result = await registerUser(username, password);
-      } else if (pathname === "/api/users/login") {
+      } else {
         result = await loginUser(username, password);
         alert("you're logged in");
       }
