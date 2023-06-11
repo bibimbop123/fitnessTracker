@@ -22,7 +22,15 @@ const Nav = () => {
         </li>
         {user?.username != "Stranger" && (
           <>
-            <Link to="/users/profile">Profile</Link>
+            <li>
+              <Link to="/users/profile">Profile</Link>
+            </li>
+            <li>
+              <Link to="/routines">Routines</Link>
+            </li>
+            <li>
+              <Link to="/activities">Activities</Link>
+            </li>
           </>
         )}
         {(user?.username == "Stranger" || user?.username == "Stranger") && (
