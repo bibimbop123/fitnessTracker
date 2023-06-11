@@ -17,15 +17,16 @@ export default function AuthForm() {
 
     try {
       let result;
-      if (pathname === "/register") {
+      if (pathname === "/users/register") {
         result = await registerUser(username, password);
-      } else {
+      } else if (pathname === "/users/login") {
         result = await loginUser(username, password);
+        alert("you're logged in");
       }
       console.log("Result after login or register: ", result);
       if (result.success) {
         setLoggedIn(true);
-        alert("you're logged in!");
+        alert("you're registered!");
         console.log("Auth Results", result);
         navigate("/");
       }
@@ -62,8 +63,8 @@ export default function AuthForm() {
           {pathname === "/register"
             ? "Already have an account? "
             : "Don't have an account? "}
-          <Link to={pathname === "/register" ? "/login" : "/register"}>
-            {pathname === "/login" ? "Login Here" : "Sign Up"}
+          <Link to={pathname === "/register" ? "/register" : "/login"}>
+            {pathname === "/login" ? "Sign Up" : "Login Here"}
           </Link>
         </p>
       </div>

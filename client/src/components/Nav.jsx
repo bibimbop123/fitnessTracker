@@ -3,7 +3,10 @@ import { logout } from "../API/usersAuth";
 import useAuth from "../hooks/useAuth";
 
 const Nav = () => {
-  const { user, setLoggedIn, loggedIn } = useAuth();
+  const { setLoggedIn, loggedIn } = useAuth();
+  const { token, user } = useAuth();
+  console.log("token in app.jsx:", token);
+  console.log("User in app.jsx:", user);
 
   async function handleLogout() {
     await logout();
@@ -17,18 +20,27 @@ const Nav = () => {
         <li>
           <Link to="/">Home</Link>
         </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/routines">Routines</Link>
-        </li>
-        <li>
-          <Link to="/activities">Activities</Link>
-        </li>
+        {user?.username != "Stranger" && (
+          <>
+            <Link to="/users/profile">Profile</Link>
+          </>
+        )}
+        {(user?.username == "Stranger" || user?.username == "Stranger") && (
+          <>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/routines">Routines</Link>
+            </li>
+            <li>
+              <Link to="/activities">Activities</Link>
+            </li>
+          </>
+        )}
       </ul>
       <button className="navbar__logout" onClick={handleLogout}>
         Logout
