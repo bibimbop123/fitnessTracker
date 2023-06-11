@@ -10,10 +10,10 @@ function ProfileComponent() {
 
   useEffect(() => {
     async function getRoutinesbyUser() {
-      const response = await getUserRoutines();
+      setUser(user);
+      const response = await getUserRoutines(user);
       console.log("response:", response);
       setMyRoutines([response]);
-      setUser(user);
     }
     getRoutinesbyUser();
   }, [user]);

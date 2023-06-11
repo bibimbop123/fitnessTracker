@@ -11,9 +11,18 @@ export default function AuthForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (username.length < 8) {
+      setError("username must be longer than 8 characters");
+      return;
+    }
+    if (password !== passwordConfirmation) {
+      setError("passwords don't match");
+      return;
+    }
 
     try {
       let result;
@@ -56,6 +65,11 @@ export default function AuthForm() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="password confirmation"
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
           <button type="submit">Submit</button>
         </form>
