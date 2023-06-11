@@ -5,7 +5,7 @@ import ActivitiesComponent from "./components/AllActivities";
 import Nav from "./components/Nav";
 import AuthForm from "./components/auth/AuthForm";
 import useAuth from "./hooks/useAuth";
-import { Profile } from "./components/Profile";
+import { ProfileComponent } from "./components/ProfileComponent";
 // import ActivitiesComponent from "./components/Activities";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
         <Route path="/login" element={<AuthForm />} />
         <Route path="/routines" element={<RoutinesComponent />} />
         <Route path="/activities" element={<ActivitiesComponent />} />
-        <Route path="/users/profile" element={<Profile />} />
+        <Route path="/users/profile" element={<ProfileComponent />} />
       </Routes>
     </div>
   );
