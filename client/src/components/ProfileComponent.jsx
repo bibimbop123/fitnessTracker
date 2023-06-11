@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { getUserRoutines } from "../API/usersAuth";
 
 function ProfileComponent() {
-  const [user, setUser] = useState(useAuth());
-  console.log("user:", user);
+  const { user } = useAuth();
 
   const [myRoutines, setMyRoutines] = useState([]);
 
@@ -12,32 +11,26 @@ function ProfileComponent() {
     async function getRoutinesbyUser() {
       const response = await getUserRoutines();
       console.log("response:", response);
-      setMyRoutines([response]);
-      setUser(user);
+      setMyRoutines(response);
     }
     getRoutinesbyUser();
   }, [user]);
+
   return (
-    <>
-      <div className="profilePage">
-        <h1> Welcome to your Profile {user.username}</h1>
-        <h2> my routines</h2>
-        <div className="myroutines">
-          {myRoutines.map((routine, idx) => {
-            return (
-              <>
-                <div className="routine">
-                  <div key={idx} className="routinecard">
-                    <p>{routine.name}</p>
-                    <p>{routine.goal}</p>
-                  </div>
-                </div>
-              </>
-            );
-          })}
-        </div>
+    <div className="profilePage">
+      <h1>Welcome to your Profile, {user.username}</h1>
+      <h2>My Routines</h2>
+      <div className="myroutines">
+        {myRoutines.map((routine, idx) => (
+          <div className="routine" key={idx}>
+            <div className="routinecard">
+              <p>{routine.name}</p>
+              <p>{routine.goal}</p>
+            </div>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 }
 
