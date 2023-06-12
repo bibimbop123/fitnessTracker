@@ -9,7 +9,7 @@ function ProfileComponent() {
 
   useEffect(() => {
     async function getRoutinesbyUser() {
-      const response = await getUserRoutines();
+      const response = await getUserRoutines(user);
       console.log("response:", response);
       setMyRoutines(response);
     }
@@ -24,8 +24,8 @@ function ProfileComponent() {
         {myRoutines.map((routine, idx) => (
           <div className="routine" key={idx}>
             <div className="routinecard">
-              <p>{routine.name}</p>
-              <p>{routine.goal}</p>
+              {/* <p>{routine.routineName}</p>
+              <p>{routine.routineGoal}</p> */}
             </div>
           </div>
         ))}

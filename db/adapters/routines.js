@@ -128,7 +128,7 @@ async function getPublicRoutinesByUser(username) {
       CASE WHEN routine_activities.routine_id IS NULL THEN '[]'::json
       ELSE 
       JSON_AGG(
-        JSon_BUILD_OBJECT(
+        JSON_BUILD_OBJECT(
           'id', activities.id,
           'name', activities.name,
           'description', activities.description,
