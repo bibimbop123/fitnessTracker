@@ -6,7 +6,7 @@ import Nav from "./components/Nav";
 import AuthForm from "./components/auth/AuthForm";
 import useAuth from "./hooks/useAuth";
 import { ProfileComponent } from "./components/ProfileComponent";
-// import ActivitiesComponent from "./components/Activities";
+import { CreateActivity } from "./components/auth/CreateActivityForm";
 
 function App() {
   const { token, user } = useAuth();
@@ -23,6 +23,7 @@ function App() {
         <Route path="/routines" element={<RoutinesComponent />} />
         <Route path="/activities" element={<ActivitiesComponent />} />
         <Route path="/users/profile" element={<ProfileComponent />} />
+        <Route path="/createActivity" element={<CreateActivity />} />
       </Routes>
     </div>
   );
