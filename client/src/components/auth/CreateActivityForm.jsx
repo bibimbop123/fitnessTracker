@@ -14,6 +14,7 @@ export function CreateActivity() {
 
       setError(newActivity.message);
       setNewActivity(newActivity);
+      alert("you have created a new Activity!");
     } catch (error) {
       setError(error.message);
       console.error(error);
@@ -33,6 +34,7 @@ export function CreateActivity() {
         onChange={(e) => setDescription(e.target.value)}
       />
       <button onClick={handleClick}>Create Activity</button>
+
       <p>{error}</p>
     </div>
   );

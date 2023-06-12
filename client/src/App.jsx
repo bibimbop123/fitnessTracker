@@ -7,6 +7,7 @@ import AuthForm from "./components/auth/AuthForm";
 import useAuth from "./hooks/useAuth";
 import { ProfileComponent } from "./components/ProfileComponent";
 import { CreateActivity } from "./components/auth/CreateActivityForm";
+import CreateRoutine from "./components/auth/CreateRoutineForm";
 
 function App() {
   const { token, user } = useAuth();
@@ -24,6 +25,7 @@ function App() {
         <Route path="/activities" element={<ActivitiesComponent />} />
         <Route path="/users/profile" element={<ProfileComponent />} />
         <Route path="/createActivity" element={<CreateActivity />} />
+        <Route path="/createRoutine" element={<CreateRoutine />} />
       </Routes>
     </div>
   );

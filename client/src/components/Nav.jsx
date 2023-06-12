@@ -34,6 +34,9 @@ const Nav = () => {
             <li>
               <Link to="/createActivity">Create Activity</Link>
             </li>
+            <li>
+              <Link to="/createRoutine">Create Routine</Link>
+            </li>
           </>
         )}
         {(user?.username == "Stranger" || user?.username == "Stranger") && (
