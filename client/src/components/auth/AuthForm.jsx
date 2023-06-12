@@ -10,7 +10,7 @@ export default function AuthForm() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   async function handleSubmit(e) {
@@ -35,13 +35,15 @@ export default function AuthForm() {
       console.log("Result after login or register: ", result);
       if (result.success) {
         setLoggedIn(true);
-        alert("you're registered!");
+
         console.log("Auth Results", result);
-        navigate("/");
+        navigate("/users/profile");
       }
     } catch (error) {
       setError(error.message);
     }
+    setUsername("");
+    setPassword("");
   }
 
   return (

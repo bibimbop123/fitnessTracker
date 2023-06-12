@@ -28,8 +28,8 @@ function ProfileComponent() {
               <>
                 <div className="routine">
                   <div key={idx} className="routinecard">
-                    <p>{routine.name}</p>
-                    <p>{routine.goal}</p>
+                    {/* <p>{routine.name}</p>
+                    <p>{routine.goal}</p> */}
                   </div>
                 </div>
               </>
