@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../API/usersAuth";
 import useAuth from "../hooks/useAuth";
 
@@ -8,9 +8,12 @@ const Nav = () => {
   console.log("token in app.jsx:", token);
   console.log("User in app.jsx:", user);
 
+  const navigate = useNavigate();
+
   async function handleLogout() {
     await logout();
     setLoggedIn(!loggedIn);
+    navigate("/");
   }
 
   return (
